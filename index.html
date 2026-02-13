@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Package Efficiency Guide</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+    <div class="background-glow"></div>
+    <header>
+        <h1>패키지 효율 가이드</h1>
+        <p>가장 효율적인 패키지를 찾아보세요.</p>
+    </header>
+
+    <main>
+        <!-- Chart Section -->
+        <section class="chart-container">
+            <canvas id="efficiencyChart"></canvas>
+        </section>
+
+        <!-- Table Section -->
+        <section class="table-container">
+            <table id="package-table">
+                <thead>
+                    <tr>
+                        <th class="th-tier">티어</th>
+                        <th class="th-name">패키지 이름</th>
+                        <th class="th-price">가격</th>
+                        <th class="th-limit">개수</th>
+                        <th class="th-score">효율</th>
+                        <th class="th-gems">루비</th>
+                        <th class="th-gold">어빌리티 포인트</th>
+                        <th class="th-other">기타 구성품</th>
+                        <th class="th-desc">설명</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Rows injected by main.js -->
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <!-- Load data first -->
+    <script src="data.js"></script>
+    <script src="main.js"></script>
+</body>
+
+</html>

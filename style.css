@@ -1,0 +1,246 @@
+:root {
+    --bg-color: #0f172a;
+    --card-bg: rgba(30, 41, 59, 0.7);
+    --table-header-bg: #1e293b;
+    --table-row-bg: rgba(30, 41, 59, 0.4);
+    --text-primary: #f8fafc;
+    --text-secondary: #94a3b8;
+    --accent-color: #3b82f6;
+    --accent-glow: rgba(59, 130, 246, 0.5);
+
+    /* Tier Colors */
+    --tier-c: #10b981;
+    --tier-b: #3b82f6;
+    --tier-a: #a855f7;
+    --tier-s: #f59e0b;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+    font-family: 'Outfit', sans-serif;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    overflow-x: hidden;
+}
+
+.background-glow {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 50% 0%, var(--accent-glow) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(168, 85, 247, 0.2) 0%, transparent 40%);
+    z-index: -1;
+    pointer-events: none;
+}
+
+header {
+    text-align: center;
+    padding: 3rem 1rem 1rem;
+}
+
+header h1 {
+    font-size: 2.5rem;
+    margin: 0;
+    background: linear-gradient(to right, #fff, #94a3b8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 700;
+}
+
+header p {
+    color: var(--text-secondary);
+    font-size: 1rem;
+    margin-top: 0.5rem;
+}
+
+main {
+    width: 100%;
+    max-width: 1400px;
+    /* Increased width for more columns */
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+}
+
+/* Chart Container */
+.chart-container {
+    background: var(--card-bg);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 2rem;
+    backdrop-filter: blur(10px);
+    width: 100%;
+    box-sizing: border-box;
+    height: 400px;
+    /* Fixed height for chart */
+}
+
+/* Table Design */
+.table-container {
+    overflow-x: auto;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: var(--card-bg);
+    backdrop-filter: blur(10px);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 1000px;
+    /* Ensure table doesn't squash too much */
+}
+
+th,
+td {
+    padding: 1rem 1rem;
+    /* Slightly reduced padding */
+    text-align: left;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    white-space: nowrap;
+    /* Prevent wrapping for most columns */
+}
+
+th {
+    background-color: var(--table-header-bg);
+    color: var(--text-secondary);
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.05em;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+tbody tr {
+    transition: background-color 0.2s ease;
+}
+
+tbody tr:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* Specific Column Styles */
+.col-tier {
+    font-weight: 700;
+    width: 50px;
+    text-align: center;
+}
+
+.th-tier {
+    text-align: center;
+}
+
+.tier-C {
+    color: var(--tier-c);
+}
+
+.tier-B {
+    color: var(--tier-b);
+}
+
+.tier-A {
+    color: var(--tier-a);
+}
+
+.tier-S {
+    color: var(--tier-s);
+    text-shadow: 0 0 10px rgba(245, 158, 11, 0.3);
+}
+
+.col-name {
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: var(--text-primary);
+}
+
+.col-price {
+    font-family: monospace;
+    font-size: 1.1rem;
+    color: var(--text-primary);
+    text-align: right;
+}
+
+.th-price {
+    text-align: right;
+}
+
+.col-limit {
+    text-align: center;
+    color: var(--text-secondary);
+}
+
+.th-limit {
+    text-align: center;
+}
+
+.col-gems {
+    color: #60a5fa;
+    /* Light Blue for Gems */
+    font-family: monospace;
+    text-align: right;
+    font-weight: 600;
+}
+
+.th-gems {
+    text-align: right;
+}
+
+.col-gold {
+    color: #fbbf24;
+    /* Amber for Gold */
+    font-family: monospace;
+    text-align: right;
+    font-weight: 600;
+}
+
+.th-gold {
+    text-align: right;
+}
+
+.col-other ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    white-space: normal;
+    /* Allow wrapping for list items */
+}
+
+.col-other li::before {
+    content: "• ";
+    color: var(--accent-color);
+}
+
+.col-score {
+    font-weight: 700;
+    color: var(--accent-color);
+    text-align: center;
+}
+
+.th-score {
+    text-align: center;
+}
+
+.col-desc {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    max-width: 250px;
+    white-space: normal;
+    /* Allow description to wrap */
+}
