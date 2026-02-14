@@ -1,5 +1,5 @@
-// Number Formatter (e.g. 10000 -> 1만, 1500 -> 1,500)
-function formatNumber(num) {
+// Number Formatter (Shortened for specific resources: 10000 -> 1만)
+function formatNumberShort(num) {
     if (Math.abs(num) >= 100000000) {
         return (num / 100000000).toFixed(1).replace(/\.0$/, '') + '억';
     }
@@ -9,17 +9,72 @@ function formatNumber(num) {
     return num.toLocaleString();
 }
 
+// Exact Formatter (e.g. 15000 -> 15,000)
+function formatNumberExact(num) {
+    return num.toLocaleString();
+}
+
 function formatPrice(price) {
     return price.toLocaleString() + '원';
+}
+
+// Key Conversion Constants
+const SILVER_KEY_REWARDS = {
+    ruby: 60000,
+    dungeon_key: 12,
+    abyss_scroll: 10,
+    mystery_crystal: 1
+};
+
+const GOLDEN_KEY_FIXED = {
+    ruby: 600000,
+    abyss_scroll: 100,
+    mystery_crystal: 10,
+    time_scroll: 20
+};
+
+const GOLDEN_KEY_CHOICES = {
+    dungeon_key: { dungeon_key: 160 },
+    dimension_fragment: { dimension_fragment: 300 },
+    exploration_key: { exploration_key: 160 },
+    ruby: { ruby: 2000000 }
+};
+
+let currentGoldenKeyChoice = 'dungeon_key';
+
+function getEffectiveContents(contents) {
+    let effective = { ...contents };
+
+    // Convert Silver Keys
+    if (contents.silver_key) {
+        const count = contents.silver_key;
+        for (const [key, val] of Object.entries(SILVER_KEY_REWARDS)) {
+            effective[key] = (effective[key] || 0) + (val * count);
+        }
+        delete effective.silver_key;
+    }
+
+    // Convert Golden Keys
+    if (contents.golden_key) {
+        const count = contents.golden_key;
+        // Fixed rewards
+        for (const [key, val] of Object.entries(GOLDEN_KEY_FIXED)) {
+            effective[key] = (effective[key] || 0) + (val * count);
+        }
+        // Choice rewards
+        const choiceRewards = GOLDEN_KEY_CHOICES[currentGoldenKeyChoice];
+        for (const [key, val] of Object.entries(choiceRewards)) {
+            effective[key] = (effective[key] || 0) + (val * count);
+        }
+        delete effective.golden_key;
+    }
+
+    return effective;
 }
 
 // Calculate Step-up Totals (Recursively if needed, but 1-level deep is enough here)
 function preProcessPackages(pkgs) {
     pkgs.forEach(pkg => {
-        // Calculate Value Score
-        // Assuming Ruby efficiency: Ruby amount / Price. If Ruby is 0, use arbitrary base?
-        // Let's implement a simple efficiency metric: (Ruby + AP/10) / Price for now, or just placeholder.
-
         if (pkg.type === 'stepup' && pkg.subPackages) {
             let totalContents = {};
             let totalPrice = 0;
@@ -38,143 +93,144 @@ function preProcessPackages(pkgs) {
 
             pkg.contents = totalContents;
             pkg.price = totalPrice;
-            pkg.calculated = true;
-        }
-
-        // Calculate Value Score based on Price vs Ruby
-        // If price is 0 (bonus), score is infinite/high
-        if (pkg.price === 0) {
-            pkg.valueScore = 999999;
-        } else {
-            const rubies = pkg.contents.ruby || 0;
-            if (rubies > 0) {
-                pkg.valueScore = Math.floor(rubies / pkg.price * 100); // Ruby per 100 Won
-            } else {
-                pkg.valueScore = 0; // Or based on other items?
-            }
+            pkg.calculatedBySub = true; // Use different flag to avoid re-summing on re-render
         }
     });
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+function updateValueScoresAndRender() {
+    packages.forEach(pkg => {
+        const effective = getEffectiveContents(pkg.contents);
+
+        if (pkg.price === 0) {
+            pkg.valueScore = 999999;
+        } else {
+            const rubies = effective.ruby || 0;
+            if (rubies > 0) {
+                pkg.valueScore = Math.floor(rubies / pkg.price * 100);
+            } else {
+                pkg.valueScore = 0;
+            }
+        }
+
+        // Apply same for sub packages
+        if (pkg.subPackages) {
+            pkg.subPackages.forEach(sub => {
+                const subEffective = getEffectiveContents(sub.contents);
+                if (sub.price === 0) {
+                    sub.valueScore = 999999;
+                } else if (subEffective.ruby > 0) {
+                    sub.valueScore = Math.floor(subEffective.ruby / sub.price * 100);
+                } else {
+                    sub.valueScore = 0;
+                }
+            });
+        }
+    });
+
+    renderAll();
+}
+
+let efficiencyChart = null;
+
+function renderAll() {
     const tableBody = document.querySelector('#package-table tbody');
-    const ctx = document.getElementById('efficiencyChart').getContext('2d');
+    tableBody.innerHTML = '';
 
-    if (!packages || packages.length === 0) {
-        tableBody.innerHTML = '<tr><td colspan="9" style="text-align:center;">No packages available.</td></tr>';
-        return;
-    }
-
-    // Pre-process Data (Sums for Step-ups)
-    preProcessPackages(packages);
-
-    // Sort packages by Tier (S > A > B > C)
+    // Sort packages by tier
     const tierOrder = { 'S': 4, 'A': 3, 'B': 2, 'C': 1 };
     const sortedPackages = [...packages].sort((a, b) => {
-        // Handle undefined tiers
         const tierA = a.tier ? tierOrder[a.tier] || 0 : 0;
         const tierB = b.tier ? tierOrder[b.tier] || 0 : 0;
         return tierB - tierA;
     });
 
-    function createRow(pkg, isSubPackage = false) {
-        const row = document.createElement('tr');
-
-        // Extract Ruby and AP specifically
-        const rubyVal = pkg.contents.ruby ? formatNumber(pkg.contents.ruby) : '-';
-        const apVal = pkg.contents.ap ? formatNumber(pkg.contents.ap) : '-';
-
-        // Generate "Others" list
-        let othersList = [];
-        for (const [key, val] of Object.entries(pkg.contents)) {
-            if (key !== 'ruby' && key !== 'ap') {
-                const name = RESOURCE_NAMES[key] || key;
-                othersList.push(`${name} ${formatNumber(val)}`);
-            }
-        }
-
-        const otherItemsHtml = othersList.length > 0
-            ? `<ul>${othersList.map(item => `<li>${item}</li>`).join('')}</ul>`
-            : '-';
-
-        let nameHtml = pkg.name;
-        let expandBtn = '';
-
-        if (pkg.type === 'stepup' && pkg.subPackages) {
-            expandBtn = `<button class="toggle-btn" onclick="toggleSubRows('${pkg.id}')">▼</button> `;
-            nameHtml = expandBtn + pkg.name;
-            row.classList.add('stepup-parent');
-        }
-
-        if (isSubPackage) {
-            row.classList.add('sub-package');
-            row.classList.add(`parent-${pkg.parentId}`); // Helper class to find correct rows
-            row.style.display = 'none'; // Hidden by default
-            nameHtml = `<span style="padding-left: 20px;">└ ${pkg.name}</span>`;
-        }
-
-        const countDisplay = isSubPackage ? pkg.count + '회' : (pkg.count ? pkg.count + '회' : '-');
-
-        row.innerHTML = `
-            <td class="col-tier tier-${pkg.tier || ''}">${pkg.tier || '-'}</td>
-            <td class="col-name">${nameHtml}</td>
-            <td class="col-price">${formatPrice(pkg.price)}</td>
-            <td class="col-limit">${countDisplay}</td>
-            <td class="col-score">${pkg.valueScore ? pkg.valueScore.toLocaleString() : '-'}</td>
-            <td class="col-gems">${rubyVal}</td>
-            <td class="col-gold">${apVal}</td>
-            <td class="col-other">${otherItemsHtml}</td>
-            <td class="col-desc">${pkg.description || '-'}</td>
-        `;
-        return row;
-    }
-
-    // Render Table
     sortedPackages.forEach(pkg => {
-        // Render Main Row
         const mainRow = createRow(pkg);
         tableBody.appendChild(mainRow);
 
-        // Render Sub Packages if any
         if (pkg.type === 'stepup' && pkg.subPackages) {
             pkg.subPackages.forEach(sub => {
-                // Pass parent ID to sub package for linking
                 sub.parentId = pkg.id;
-                // Sub packages usually don't have tiers, inherit or leave blank? Leave blank.
-                // Sub packages value score might be irrelevant or needs calc.
-                // Re-calculate individual sub-package value score for display?
-                if (sub.contents && sub.price) {
-                    const rubies = sub.contents.ruby || 0;
-                    if (rubies > 0) sub.valueScore = Math.floor(rubies / sub.price * 100);
-                }
-
                 const subRow = createRow(sub, true);
                 tableBody.appendChild(subRow);
             });
         }
     });
 
-    // Global toggle function
-    window.toggleSubRows = (parentId) => {
-        const subRows = document.querySelectorAll(`.parent-${parentId}`);
-        subRows.forEach(row => {
-            if (row.style.display === 'none') {
-                row.style.display = 'table-row';
-            } else {
-                row.style.display = 'none';
-            }
-        });
-    };
+    renderChart(sortedPackages);
+}
 
-    // Render Chart
-    const chartPackages = sortedPackages.filter(p => p.valueScore && p.valueScore < 900000); // Filter out infinite/bonus
+function createRow(pkg, isSubPackage = false) {
+    const row = document.createElement('tr');
 
-    new Chart(ctx, {
+    // Use EFFECTIVE contents for display
+    const effective = getEffectiveContents(pkg.contents);
+
+    const rubyVal = effective.ruby ? formatNumberShort(effective.ruby) : '-';
+    const apVal = effective.ap ? formatNumberShort(effective.ap) : '-';
+
+    let othersList = [];
+    for (const [key, val] of Object.entries(effective)) {
+        if (key !== 'ruby' && key !== 'ap') {
+            const name = RESOURCE_NAMES[key] || key;
+            const formattedVal = (key === 'magic_stone')
+                ? formatNumberShort(val)
+                : formatNumberExact(val);
+            othersList.push(`${name} ${formattedVal}`);
+        }
+    }
+
+    const otherItemsHtml = othersList.length > 0
+        ? `<ul>${othersList.map(item => `<li>${item}</li>`).join('')}</ul>`
+        : '-';
+
+    let nameHtml = pkg.name;
+    let expandBtn = '';
+
+    if (pkg.type === 'stepup' && pkg.subPackages) {
+        expandBtn = `<button class="toggle-btn" onclick="toggleSubRows('${pkg.id}')">▼</button> `;
+        nameHtml = expandBtn + pkg.name;
+        row.classList.add('stepup-parent');
+    }
+
+    if (isSubPackage) {
+        row.classList.add('sub-package');
+        row.classList.add(`parent-${pkg.parentId}`);
+        row.style.display = 'none';
+        nameHtml = `<span style="padding-left: 20px;">└ ${pkg.name}</span>`;
+    }
+
+    const countDisplay = isSubPackage ? pkg.count + '회' : (pkg.count ? pkg.count + '회' : '-');
+
+    row.innerHTML = `
+        <td class="col-tier tier-${pkg.tier || ''}">${pkg.tier || '-'}</td>
+        <td class="col-name">${nameHtml}</td>
+        <td class="col-price">${formatPrice(pkg.price)}</td>
+        <td class="col-limit">${countDisplay}</td>
+        <td class="col-score">${pkg.valueScore ? pkg.valueScore.toLocaleString() : '-'}</td>
+        <td class="col-gems">${rubyVal}</td>
+        <td class="col-gold">${apVal}</td>
+        <td class="col-other">${otherItemsHtml}</td>
+        <td class="col-desc">${pkg.description || '-'}</td>
+    `;
+    return row;
+}
+
+function renderChart(sortedPackages) {
+    const ctx = document.getElementById('efficiencyChart').getContext('2d');
+    const chartPackages = sortedPackages.filter(p => p.valueScore && p.valueScore < 900000);
+
+    if (efficiencyChart) {
+        efficiencyChart.destroy();
+    }
+
+    efficiencyChart = new Chart(ctx, {
         type: 'bar',
         data: {
             labels: chartPackages.map(pkg => pkg.name),
             datasets: [{
-                label: '루비 효율 (100원당 루비)',
+                label: '루비 효율 (환산 포함)',
                 data: chartPackages.map(pkg => pkg.valueScore),
                 backgroundColor: chartPackages.map(pkg => {
                     switch (pkg.tier) {
@@ -201,41 +257,42 @@ document.addEventListener('DOMContentLoaded', () => {
             responsive: true,
             maintainAspectRatio: false,
             plugins: {
-                legend: {
-                    display: false
-                },
+                legend: { display: false },
                 title: {
                     display: true,
-                    text: '패키지 효율 비교 (100원당 루비)',
+                    text: '패키지 효율 비교 (100원당 루비 환산 가치)',
                     color: '#f8fafc',
-                    font: {
-                        size: 16,
-                        family: 'Outfit'
-                    }
+                    font: { size: 16, family: 'Outfit' }
                 }
             },
             scales: {
-                y: {
-                    beginAtZero: true,
-                    grid: {
-                        color: 'rgba(255, 255, 255, 0.1)'
-                    },
-                    ticks: {
-                        color: '#94a3b8'
-                    }
-                },
-                x: {
-                    grid: {
-                        display: false
-                    },
-                    ticks: {
-                        color: '#f8fafc',
-                        font: {
-                            family: 'Outfit'
-                        }
-                    }
-                }
+                y: { beginAtZero: true, grid: { color: 'rgba(255, 255, 255, 0.1)' }, ticks: { color: '#94a3b8' } },
+                x: { grid: { display: false }, ticks: { color: '#f8fafc', font: { family: 'Outfit' } } }
             }
         }
     });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Initial Pre-process
+    preProcessPackages(packages);
+
+    // Initial Render
+    updateValueScoresAndRender();
+
+    // Listen for toggle changes
+    document.querySelectorAll('input[name="key-choice"]').forEach(radio => {
+        radio.addEventListener('change', (e) => {
+            currentGoldenKeyChoice = e.target.value;
+            updateValueScoresAndRender();
+        });
+    });
+
+    // Global toggle sub rows
+    window.toggleSubRows = (parentId) => {
+        const subRows = document.querySelectorAll(`.parent-${parentId}`);
+        subRows.forEach(row => {
+            row.style.display = (row.style.display === 'none') ? 'table-row' : 'none';
+        });
+    };
 });

@@ -100,6 +100,75 @@ table {
     /* Ensure table doesn't squash too much */
 }
 
+/* Settings Section */
+.settings-container {
+    max-width: 1200px;
+    margin: 0 auto 20px auto;
+    padding: 20px;
+    background: rgba(30, 41, 59, 0.4);
+    backdrop-filter: blur(12px);
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.settings-container label {
+    font-weight: 600;
+    color: #f1f5f9;
+}
+
+.radio-group {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.radio-item {
+    position: relative;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 500;
+    padding: 8px 16px;
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 99px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    align-items: center;
+    color: #94a3b8;
+}
+
+.radio-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: #f59e0b;
+}
+
+.radio-item input[type="radio"] {
+    display: none;
+}
+
+.radio-item:has(input:checked) {
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.2), rgba(217, 119, 6, 0.3));
+    border-color: #f59e0b;
+    color: #fbbf24;
+    box-shadow: 0 0 15px rgba(245, 158, 11, 0.2);
+}
+
+.radio-item:has(input:checked)::before {
+    content: '⭐';
+    margin-right: 6px;
+    font-size: 0.8rem;
+}
+
+/* Step-up Colors... */
+.stepup-parent {
+    background: rgba(30, 41, 59, 0.6);
+    border-left: 4px solid #f59e0b !important;
+}
+
 th,
 td {
     padding: 1rem 1rem;

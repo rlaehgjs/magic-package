@@ -16,11 +16,33 @@
 <body>
     <div class="background-glow"></div>
     <header>
-        <h1>패키지 효율 가이드</h1>
-        <p>가장 효율적인 패키지를 찾아보세요.</p>
+        <h1>🪄 템페스트: 매직 패키지 효율 가이드</h1>
+        <p>현명한 소비를 위한 실시간 패키지 가성비 분석</p>
     </header>
 
-    <main>
+    <div class="settings-container">
+        <label>🔑 황금 열쇠 추가 보상 선택:</label>
+        <div class="radio-group">
+            <label class="radio-item">
+                <input type="radio" name="key-choice" value="dungeon_key" checked>
+                <span>던전 열쇠 (160)</span>
+            </label>
+            <label class="radio-item">
+                <input type="radio" name="key-choice" value="dimension_fragment">
+                <span>차원의 조각 (300)</span>
+            </label>
+            <label class="radio-item">
+                <input type="radio" name="key-choice" value="exploration_key">
+                <span>탐험 열쇠 (160)</span>
+            </label>
+            <label class="radio-item">
+                <input type="radio" name="key-choice" value="ruby">
+                <span>루비 (200만)</span>
+            </label>
+        </div>
+    </div>
+
+    <section class="summary-section">
         <!-- Chart Section -->
         <section class="chart-container">
             <canvas id="efficiencyChart"></canvas>
@@ -47,11 +69,11 @@
                 </tbody>
             </table>
         </section>
-    </main>
+        </main>
 
-    <!-- Load data first -->
-    <script src="data.js"></script>
-    <script src="main.js"></script>
+        <!-- Load data first -->
+        <script src="data.js"></script>
+        <script src="main.js"></script>
 </body>
 
 </html>
