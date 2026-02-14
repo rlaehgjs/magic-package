@@ -11,69 +11,95 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
     <!-- Chart.js CDN -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- html2canvas for image export -->
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 </head>
 
 <body>
     <div class="background-glow"></div>
-    <header>
-        <h1>🪄 템페스트: 매직 패키지 효율 가이드</h1>
-        <p>현명한 소비를 위한 실시간 패키지 가성비 분석</p>
-    </header>
+    <div id="capture-area" style="background-color: var(--bg-color); padding-bottom: 2rem;">
+        <div class="top-sticky-container">
+            <header>
+                <h1>마법소녀 키우기 패키지 효율표</h1>
+                <p>2026.02.15(V7.42)기준</p>
+            </header>
 
-    <div class="settings-container">
-        <label>🔑 황금 열쇠 추가 보상 선택:</label>
-        <div class="radio-group">
-            <label class="radio-item">
-                <input type="radio" name="key-choice" value="dungeon_key" checked>
-                <span>던전 열쇠 (160)</span>
-            </label>
-            <label class="radio-item">
-                <input type="radio" name="key-choice" value="dimension_fragment">
-                <span>차원의 조각 (300)</span>
-            </label>
-            <label class="radio-item">
-                <input type="radio" name="key-choice" value="exploration_key">
-                <span>탐험 열쇠 (160)</span>
-            </label>
-            <label class="radio-item">
-                <input type="radio" name="key-choice" value="ruby">
-                <span>루비 (200만)</span>
-            </label>
+            <!-- Chart Section -->
+            <section class="chart-container">
+                <canvas id="efficiencyChart"></canvas>
+            </section>
+
+            <div class="settings-wrapper">
+                <div class="settings-container">
+                    <label class="settings-label">🔑 황금 열쇠 보상:</label>
+                    <div class="radio-group">
+                        <label class="radio-item"><input type="radio" name="key-choice" value="dungeon_key"
+                                checked><span>던전
+                                열쇠</span></label>
+                        <label class="radio-item"><input type="radio" name="key-choice"
+                                value="dimension_fragment"><span>차원의
+                                조각</span></label>
+                        <label class="radio-item"><input type="radio" name="key-choice" value="exploration_key"><span>탐험
+                                열쇠</span></label>
+                        <label class="radio-item"><input type="radio" name="key-choice"
+                                value="ruby"><span>루비</span></label>
+                    </div>
+
+                    <div class="divider"></div>
+
+                    <label class="switch-item">
+                        <input type="checkbox" id="convert-ap-toggle">
+                        <span class="slider">✨ 어빌포 환산</span>
+                    </label>
+                    <label class="switch-item">
+                        <input type="checkbox" id="convert-magic-toggle">
+                        <span class="slider">🔮 마법 환산</span>
+                    </label>
+                    <label class="switch-item">
+                        <input type="checkbox" id="efficiency-mode-toggle">
+                        <span class="slider">📊 가성비 모드(만원당)</span>
+                    </label>
+                    <button id="capture-btn" class="capture-btn">📸 이미지 저장</button>
+                </div>
+            </div>
         </div>
+
+        <main>
+            <section class="summary-section">
+                <!-- Table Section -->
+                <section class="table-container">
+                    <table id="package-table">
+                        <thead>
+                            <th class="th-tier sortable" data-sort="tier">티어</th>
+                            <th class="th-name">패키지 이름</th>
+                            <th class="th-price sortable" data-sort="price">가격</th>
+                            <th class="th-limit">개수</th>
+                            <th class="th-res sortable" data-sort="ruby">루비</th>
+                            <th class="th-res sortable" data-sort="ap">어빌리티 포인트</th>
+                            <th class="th-res sortable" data-sort="magic">마법</th>
+                            <th class="th-res sortable" data-sort="dungeon_key">던전 열쇠</th>
+                            <th class="th-res sortable" data-sort="dimension_key">차원의 열쇠</th>
+                            <th class="th-res sortable" data-sort="dimension_fragment">차원의 조각</th>
+                            <th class="th-res sortable" data-sort="exploration_key">탐험 열쇠</th>
+                            <th class="th-res sortable" data-sort="abyss_scroll">심층 스크롤</th>
+                            <th class="th-res sortable" data-sort="top_amulet">최상급 아뮬렛</th>
+                            <th class="th-res sortable" data-sort="mystery_crystal">신차결</th>
+                            <th class="th-res sortable" data-sort="time_scroll">시간 스크롤</th>
+                            <th class="th-other">기타 구성품</th>
+                            <th class="th-desc">설명</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Rows injected by main.js -->
+                        </tbody>
+                    </table>
+                </section>
+        </main>
     </div>
 
-    <section class="summary-section">
-        <!-- Chart Section -->
-        <section class="chart-container">
-            <canvas id="efficiencyChart"></canvas>
-        </section>
-
-        <!-- Table Section -->
-        <section class="table-container">
-            <table id="package-table">
-                <thead>
-                    <tr>
-                        <th class="th-tier">티어</th>
-                        <th class="th-name">패키지 이름</th>
-                        <th class="th-price">가격</th>
-                        <th class="th-limit">개수</th>
-                        <th class="th-score">효율</th>
-                        <th class="th-gems">루비</th>
-                        <th class="th-gold">어빌리티 포인트</th>
-                        <th class="th-other">기타 구성품</th>
-                        <th class="th-desc">설명</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Rows injected by main.js -->
-                </tbody>
-            </table>
-        </section>
-        </main>
-
-        <!-- Load data first -->
-        <script src="data.js"></script>
-        <script src="main.js"></script>
+    <!-- Load data first -->
+    <script src="data.js"></script>
+    <script src="main.js"></script>
 </body>
 
 </html>

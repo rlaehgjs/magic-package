@@ -9,10 +9,13 @@
     --accent-glow: rgba(59, 130, 246, 0.5);
 
     /* Tier Colors */
-    --tier-c: #10b981;
-    --tier-b: #3b82f6;
-    --tier-a: #a855f7;
+    --tier-sss: #ff4d4d;
+    --tier-ss: #00d2ff;
     --tier-s: #f59e0b;
+    --tier-a: #a855f7;
+    --tier-b: #3b82f6;
+    --tier-c: #10b981;
+    --tier-d: #64748b;
 }
 
 body {
@@ -43,32 +46,45 @@ body {
 
 header {
     text-align: center;
-    padding: 3rem 1rem 1rem;
+    padding: 1rem 1rem 0.5rem;
+}
+
+.top-sticky-container {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background: var(--bg-color);
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
 }
 
 header h1 {
-    font-size: 2.5rem;
+    font-size: 2rem;
     margin: 0;
     background: linear-gradient(to right, #fff, #94a3b8);
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
     font-weight: 700;
 }
 
 header p {
     color: var(--text-secondary);
-    font-size: 1rem;
-    margin-top: 0.5rem;
+    font-size: 0.9rem;
+    margin-top: 0.2rem;
 }
 
 main {
     width: 100%;
-    max-width: 1400px;
-    /* Increased width for more columns */
-    padding: 2rem;
+    padding: 1rem 2rem;
     display: flex;
     flex-direction: column;
-    gap: 3rem;
+    gap: 2rem;
+    box-sizing: border-box;
 }
 
 /* Chart Container */
@@ -76,43 +92,73 @@ main {
     background: var(--card-bg);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 16px;
-    padding: 2rem;
+    padding: 1rem;
     backdrop-filter: blur(10px);
-    width: 100%;
+    width: 95%;
+    max-width: 1200px;
     box-sizing: border-box;
-    height: 400px;
-    /* Fixed height for chart */
+    height: 250px;
+    margin-bottom: 1rem;
 }
 
 /* Table Design */
 .table-container {
-    overflow-x: auto;
+    overflow: auto;
+    /* Handle both x and y */
     border-radius: 16px;
     border: 1px solid rgba(255, 255, 255, 0.1);
     background: var(--card-bg);
     backdrop-filter: blur(10px);
+    position: relative;
+    max-height: 70vh;
+    /* Restore a safe height to ensure internal scroll works */
+    width: 100%;
 }
 
 table {
     width: 100%;
     border-collapse: collapse;
-    min-width: 1000px;
-    /* Ensure table doesn't squash too much */
+    min-width: 1800px;
+    /* Increased min-width to accommodate all columns without squashing */
 }
 
 /* Settings Section */
+.settings-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding-bottom: 1rem;
+}
+
 .settings-container {
-    max-width: 1200px;
-    margin: 0 auto 20px auto;
-    padding: 20px;
-    background: rgba(30, 41, 59, 0.4);
-    backdrop-filter: blur(12px);
-    border-radius: 16px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
     display: flex;
     align-items: center;
-    gap: 20px;
-    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+    /* Tighter gap */
+    flex-wrap: nowrap;
+    background: rgba(30, 41, 59, 0.4);
+    padding: 10px 25px;
+    border-radius: 99px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
+    width: fit-content;
+    margin: 0 auto;
+}
+
+.divider {
+    width: 1px;
+    height: 24px;
+    background: rgba(255, 255, 255, 0.1);
+    margin: 0 10px;
+}
+
+.settings-label {
+    font-weight: 600;
+    color: #f1f5f9;
+    font-size: 0.9rem;
+    white-space: nowrap;
 }
 
 .settings-container label {
@@ -122,8 +168,9 @@ table {
 
 .radio-group {
     display: flex;
-    gap: 12px;
-    flex-wrap: wrap;
+    gap: 8px;
+    /* Slightly tighter */
+    flex-wrap: nowrap;
 }
 
 .radio-item {
@@ -139,6 +186,41 @@ table {
     display: flex;
     align-items: center;
     color: #94a3b8;
+}
+
+.capture-btn {
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    color: white;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 99px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-left: 10px;
+    box-shadow: 0 4px 10px rgba(59, 130, 246, 0.3);
+    font-family: inherit;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+}
+
+.capture-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(59, 130, 246, 0.4);
+    filter: brightness(1.1);
+}
+
+.capture-btn:active {
+    transform: translateY(0);
+}
+
+.capture-btn:disabled {
+    filter: grayscale(1);
+    cursor: not-allowed;
+    transform: none;
 }
 
 .radio-item:hover {
@@ -163,6 +245,41 @@ table {
     font-size: 0.8rem;
 }
 
+/* Switch Styling */
+.switch-item {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    transition: color 0.3s;
+}
+
+.switch-item input {
+    display: none;
+}
+
+.slider {
+    padding: 8px 16px;
+    border-radius: 99px;
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.3s;
+}
+
+.switch-item:hover .slider {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.switch-item input:checked+.slider {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(37, 99, 235, 0.3));
+    border-color: var(--accent-color);
+    color: #60a5fa;
+    box-shadow: 0 0 15px rgba(59, 130, 246, 0.2);
+}
+
 /* Step-up Colors... */
 .stepup-parent {
     background: rgba(30, 41, 59, 0.6);
@@ -180,15 +297,42 @@ td {
 }
 
 th {
-    background-color: var(--table-header-bg);
+    background-color: #1e293b;
+    /* Fallback solid color */
+    background: var(--table-header-bg);
     color: var(--text-secondary);
-    font-weight: 600;
+    font-weight: 700;
     text-transform: uppercase;
     font-size: 0.85rem;
     letter-spacing: 0.05em;
     position: sticky;
     top: 0;
-    z-index: 10;
+    z-index: 1000;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+thead {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background-color: #1e293b;
+    /* Ensure the whole head is opaque */
+}
+
+th.sortable {
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+th.sortable:hover {
+    color: var(--accent-color);
+}
+
+th.sortable.active-sort {
+    color: #fbbf24;
+    /* Amber color for active sort */
+    background-color: rgba(251, 191, 36, 0.1);
+    text-shadow: 0 0 10px rgba(251, 191, 36, 0.3);
 }
 
 tbody tr {
@@ -214,6 +358,10 @@ tbody tr:last-child td {
     text-align: center;
 }
 
+.tier-D {
+    color: var(--tier-d);
+}
+
 .tier-C {
     color: var(--tier-c);
 }
@@ -231,6 +379,89 @@ tbody tr:last-child td {
     text-shadow: 0 0 10px rgba(245, 158, 11, 0.3);
 }
 
+.tier-SS {
+    color: var(--tier-ss);
+    text-shadow: 0 0 12px rgba(0, 210, 255, 0.4);
+    font-weight: 800;
+}
+
+.tier-SSS {
+    color: var(--tier-sss);
+    text-shadow: 0 0 15px rgba(255, 77, 77, 0.5);
+    font-weight: 900;
+}
+
+/* Tier Tooltip */
+.tier-with-tooltip {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    cursor: help;
+}
+
+.tooltip-trigger {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 14px;
+    height: 14px;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    font-size: 10px;
+    color: #fff;
+    font-weight: bold;
+    margin-left: 2px;
+    transition: background-color 0.2s;
+}
+
+.tier-with-tooltip:hover .tooltip-trigger {
+    background-color: var(--accent-color);
+}
+
+.tier-tooltip-text {
+    visibility: hidden;
+    width: 240px;
+    background-color: #1e293b;
+    color: #fff;
+    text-align: left;
+    border-radius: 8px;
+    padding: 12px;
+    position: absolute;
+    z-index: 2000;
+    top: 50%;
+    left: 120%;
+    transform: translateY(-50%);
+    opacity: 0;
+    transition: opacity 0.3s, transform 0.3s;
+    font-size: 0.85rem;
+    font-weight: normal;
+    line-height: 1.4;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.5);
+    white-space: normal;
+    text-shadow: none;
+    pointer-events: none;
+}
+
+.tier-with-tooltip:hover .tier-tooltip-text {
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(-50%) translateX(5px);
+}
+
+.tier-tooltip-text::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: 100%;
+    margin-top: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent #1e293b transparent transparent;
+}
+
 .col-name {
     font-weight: 600;
     font-size: 1.1rem;
@@ -239,9 +470,10 @@ tbody tr:last-child td {
 
 .col-price {
     font-family: monospace;
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     color: var(--text-primary);
     text-align: right;
+    font-weight: 700;
 }
 
 .th-price {
@@ -257,28 +489,71 @@ tbody tr:last-child td {
     text-align: center;
 }
 
-.col-gems {
-    color: #60a5fa;
-    /* Light Blue for Gems */
+.col-res {
     font-family: monospace;
     text-align: right;
-    font-weight: 600;
+    font-weight: 700;
+    font-size: 1.25rem;
 }
 
-.th-gems {
+.th-res {
     text-align: right;
 }
 
-.col-gold {
-    color: #fbbf24;
-    /* Amber for Gold */
-    font-family: monospace;
-    text-align: right;
-    font-weight: 600;
+.res-ruby {
+    color: #ff3b3b;
+    /* 빨강색 */
 }
 
-.th-gold {
-    text-align: right;
+.res-ap {
+    color: #ffd700;
+    /* 노란색 */
+}
+
+.res-magic {
+    color: #4169e1;
+    /* 약간 짙은 파란색 (영웅 블루) */
+}
+
+.res-dungeon_key {
+    color: #00ccff;
+    /* 밝은 파란색 */
+}
+
+.res-dimension_key {
+    color: #c084fc;
+    /* 밝은 보라/파랑 (브라이트 바이올렛) */
+}
+
+.res-dimension_fragment {
+    color: #a78bfa;
+    /* 밝은 짙은 보라 */
+}
+
+.res-exploration_key {
+    color: #ffffff !important;
+    /* 하얀색 */
+}
+
+.res-abyss_scroll {
+    color: #ff00ff;
+    /* 보라색+약간 빨간색 (마젠타) */
+}
+
+.res-top_amulet {
+    color: #fffacd;
+    /* 밝은 노란색 */
+}
+
+.res-mystery_crystal {
+    color: #a5f3fc;
+    /* Bright cyan/white for safe rendering */
+    font-weight: 800;
+}
+
+.res-time_scroll {
+    color: #87ceeb;
+    /* 하늘색 */
 }
 
 .col-other ul {

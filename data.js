@@ -38,8 +38,8 @@ const packages = [
         name: "버닝 부스트 패키지",
         price: 1500,
         count: 1,
-        tier: "S",
-        description: "마정석과 어빌리티 포인트를 대량으로 얻을 수 있는 초보자 추천 패키지.",
+        tier: "SSS",
+        description: "초보자면 말할 필요도 없고, 그게 아니라도 가성비 최고로 재화를 얻을 수 있는 패키지",
         contents: {
             magic_stone: 130000000,
             ruby: 5500000,
@@ -58,8 +58,9 @@ const packages = [
         name: "메모리얼 코스튬",
         price: 29700,
         count: 2,
-        tier: "A",
-        description: "코스튬과 함께 다양한 열쇠를 획득할 수 있습니다.",
+        tier: "S",
+        tierTooltip: "초월석이 급격히 필요한 '각성을 거의 하지 않은 뉴비'에게는 SSS급입니다.",
+        description: "코스튬을 빼더라도 효율 1-2티어 급인 패키지입니다. 30만 루비는 실 구매에 쓰이므로 차감",
         contents: {
             ruby: -300000, // Negative ruby based on user input? Keeping as is.
             ap: 10000000,
@@ -79,8 +80,8 @@ const packages = [
         name: "광고 제거",
         price: 12000,
         count: 1,
-        tier: "S",
-        description: "필수 구매! 광고 없이 쾌적한 게임 플레이.",
+        tier: "SSS",
+        description: "재화는 그닥이지만 광고 제거의 편의성 하나만 보고 살 만한 패키지입니다.",
         contents: {
             ruby: 120000,
             dungeon_key: 160,
@@ -93,8 +94,8 @@ const packages = [
         name: "차원의 조각 무더기",
         price: 16000,
         count: 3,
-        tier: "B",
-        description: "차원의 조각 집중 패키지.",
+        tier: "S",
+        description: "차원의 조각만 봤을 때는 최고로 효율적인 패키지. 단 다른 재화도 보자면 핫딜 먼저 사는 걸 추천합니다.",
         contents: {
             dimension_fragment: 2500,
             time_scroll: 50,
@@ -106,8 +107,8 @@ const packages = [
         name: "루비 폭탄 상자",
         price: 16000,
         count: 3,
-        tier: "A",
-        description: "루비와 어빌리티 포인트 수급에 적합.",
+        tier: "B",
+        description: "루비와 어빌리티 포인트를 많이 주긴 하는데, 딱 거기까지 입니다. 어빌포가 부족하다면 A까지 줄 수는 있겠지만, 코스튬 투자가 거의 안 된 게 아니고서야 이거까지 지를 일은 거의 없을 겁니다.",
         contents: {
             ruby: 5000000,
             ap: 5000000,
@@ -119,13 +120,14 @@ const packages = [
         id: "wizard_full",
         name: "마법사 패키지 (전체 구매)",
         type: "stepup",
-        tier: "A",
+        tier: "SSS",
+        tierTooltip: "초보 마법사 패키지 단독 구매 시 SSS급이며, 전체 구매 합산 시에는 B급 효율로 낮아집니다.",
         description: "초보~마스터 마법사 패키지 합계. 각종 확률 버프 포함.",
         subPackages: [
-            { id: "wizard_novice", name: "초보 마법사", price: 11000, count: 1, contents: { ruby: 110000, dungeon_key: 130, magic: 10000, golden_key: 1 } },
-            { id: "wizard_inter", name: "중급 마법사", price: 33000, count: 1, contents: { ruby: 330000, dungeon_key: 440, dimension_fragment: 700, magic: 30000, golden_key: 2 } },
-            { id: "wizard_adv", name: "상급 마법사", price: 55000, count: 1, contents: { ruby: 550000, dungeon_key: 700, dimension_fragment: 1100, magic: 60000, golden_key: 3 } },
-            { id: "wizard_master", name: "마스터 마법사", price: 110000, count: 1, contents: { ruby: 1100000, dungeon_key: 1650, dimension_fragment: 2500, magic: 150000, golden_key: 5 } }
+            { id: "wizard_novice", name: "초보 마법사", price: 11000, count: 1, tier: "SSS", description: "버프 무한 적용, 매일 던전 열쇠 10개 지급.", contents: { ruby: 110000, dungeon_key: 130, magic: 10000, golden_key: 1 } },
+            { id: "wizard_inter", name: "중급 마법사", price: 33000, count: 1, tier: "B", description: "공격력/체력 2배, 장신구 추가 획득 확률 15%.", contents: { ruby: 330000, dungeon_key: 440, dimension_fragment: 700, magic: 30000, golden_key: 2 } },
+            { id: "wizard_adv", name: "상급 마법사", price: 55000, count: 1, tier: "B", description: "아이템 획득 확률 15%.", contents: { ruby: 550000, dungeon_key: 700, dimension_fragment: 1100, magic: 60000, golden_key: 3 } },
+            { id: "wizard_master", name: "마스터 마법사", price: 110000, count: 1, tier: "B", description: "특수 아이템 획득 확률 10%, 초월석 추가 획득 확률 10%.", contents: { ruby: 1100000, dungeon_key: 1650, dimension_fragment: 2500, magic: 150000, golden_key: 5 } }
         ]
     },
     {
@@ -134,7 +136,7 @@ const packages = [
         price: 55000,
         count: 10,
         tier: "B",
-        description: "정령의 성장 상자 50개 포함 (각 상자: 던열15, 차열10, 심층15, 시간5). 루비 페이백 별도.",
+        description: "정령의 성장 상자 50개 포함. 아이템 획득 확률 3%, 특수 아이템 획득 확률 1%가 있습니다. 좋은 효율은 아니지만, 드랍률을 신경쓴다면 사서 나쁠 건 없습니다.",
         contents: {
             ruby: 550000,
             ap: 15000000,
@@ -149,7 +151,7 @@ const packages = [
         id: "chloe_full",
         name: "클로에 스텝업 (전체 구매)",
         type: "stepup",
-        tier: "S",
+        tier: "B",
         description: "클로에 1차~4차 및 보너스까지 모두 획득 시 총합.",
         // Parent contents/price will be calculated automatically in main.js
         subPackages: [
@@ -158,6 +160,7 @@ const packages = [
                 name: "클로에 1차",
                 price: 3300,
                 count: 2, // Must buy 2 times
+                tier: "B",
                 contents: {
                     ruby: 33000,
                     dungeon_key: 50,
@@ -172,6 +175,7 @@ const packages = [
                 name: "클로에 2차",
                 price: 5500,
                 count: 2,
+                tier: "B",
                 contents: {
                     ruby: 55000,
                     dungeon_key: 70,
@@ -186,6 +190,7 @@ const packages = [
                 name: "클로에 3차",
                 price: 11000,
                 count: 2,
+                tier: "B",
                 contents: {
                     ruby: 110000,
                     dungeon_key: 130,
@@ -200,6 +205,7 @@ const packages = [
                 name: "클로에 4차",
                 price: 22000,
                 count: 2,
+                tier: "B",
                 contents: {
                     ruby: 220000,
                     dungeon_key: 280,
@@ -214,6 +220,7 @@ const packages = [
                 name: "클로에 보너스",
                 price: 0,
                 count: 1, // Bonus is 1 time
+                tier: "B",
                 contents: {
                     ruby: 549900,
                     top_amulet: 3,
@@ -231,7 +238,7 @@ const packages = [
         price: 19000,
         count: 2,
         tier: "S",
-        description: "던전 열쇠와 아뮬렛 위주 구성.",
+        description: "초반이든 후반이든 잘 쓰이는 재화들만 모여 있습니다. 가성비도 좋아 S급을 받기 무리가 없습니다.",
         contents: {
             dungeon_key: 1000,
             dimension_fragment: 1500,
@@ -247,7 +254,8 @@ const packages = [
         price: 29000,
         count: 2,
         tier: "S",
-        description: "열쇠와 신차결, 초월석 위주 구성.",
+        tierTooltip: "각성을 거의 하지 않은 뉴비들은 SSS급으로 볼 수 있습니다. 초월석을 주거든요.",
+        description: "열쇠와 신차결, 초월석 위주 구성이지만, 이것도 전반적으로 효율이 매우 좋습니다. 굳이 등급을 매기자면 재화 범용성으로 인해 SS-S 사이?",
         contents: {
             dungeon_key: 1500,
             exploration_key: 1000,
@@ -262,8 +270,8 @@ const packages = [
         name: "설날 핫딜 패키지",
         price: 9900,
         count: 2,
-        tier: "S",
-        description: "저렴한 가격에 풍부한 재화 구성.",
+        tier: "SS",
+        description: "가성비가 거의 1등인 패키지입니다. 정기적으로 과금하려는 사람이 이걸 안 사면 안 될 정도입니다.",
         contents: {
             dungeon_key: 600,
             dimension_fragment: 1200,
@@ -292,8 +300,8 @@ const packages = [
         name: "던전 데일리 패스",
         price: 11000,
         count: 1,
-        tier: "A",
-        description: "한 달에 한 번 구매 가능.",
+        tier: "S",
+        description: "한 달에 한 번 구매 가능합니다. 던열만 보면 가성비 최고지만, 다른 재화까지 생각하면 다른 더 좋은 것들이 있습니다.",
         contents: {
             ruby: 4000000,
             dungeon_key: 1350,
@@ -307,8 +315,8 @@ const packages = [
         name: "차원 데일리 패스",
         price: 22000,
         count: 1,
-        tier: "A",
-        description: "한 달에 한 번 구매 가능.",
+        tier: "S",
+        description: "한 달에 한 번 구매 가능합니다. 차열만 보면 버닝 부스트 빼고 최고지만, 다른 재화까지 보면 던전 데일리와 비슷하게 더 좋은 것들이 있습니다.",
         contents: {
             ruby: 8000000,
             dimension_key: 38500,
@@ -321,8 +329,8 @@ const packages = [
         id: "legendary_growth_full",
         name: "레전더리 성장 패키지 (전체 구매)",
         type: "stepup",
-        tier: "A",
-        description: "한 달에 3번 구매 시 1회 추가 지급 (총 4개 분량).",
+        tier: "B",
+        description: "한 달에 3번 구매 시 1회 추가 지급 합니다. 유니크와 비슷합니다. 중과금러의 시작.",
         subPackages: [
             {
                 id: "legendary_unit",
@@ -358,8 +366,8 @@ const packages = [
         id: "unique_growth_full",
         name: "유니크 성장 패키지 (전체 구매)",
         type: "stepup",
-        tier: "A",
-        description: "한 주에 2번 구매 시 1회 추가 지급 (총 3개 분량).",
+        tier: "B",
+        description: "한 주에 2번 구매 시 1회 추가 지급 합니다. 딱 B급 효율입니다. 중과금러의 시작.",
         subPackages: [
             {
                 id: "unique_unit",
@@ -396,8 +404,8 @@ const packages = [
         name: "결정 패키지",
         price: 22000,
         count: 3,
-        tier: "B",
-        description: "영원 결정 수급용.",
+        tier: "C",
+        description: "끝없는 영원 결정을 정말 급하게 먹어야 할 때만 사시는 걸 추천드립니다. 칠흑 훈장 패키지 보다도 효율이 낮아요.",
         contents: {
             ruby: 220000,
             dungeon_key: 400,
@@ -411,8 +419,8 @@ const packages = [
         id: "ruby_pass_full",
         name: "루비 스테이지 패스 (전체 구매)",
         type: "stepup",
-        tier: "S",
-        description: "5회 구매 시 대량의 루비 추가 지급.",
+        tier: "C",
+        description: "루비를 많이 주는 패키지여야 했으나, 요즘 패키지 인플레이션으로 인해 메리트가 많이 죽어버렸습니다.",
         subPackages: [
             { id: "ruby_pass_unit", name: "루비 패스 (1~5회)", price: 33000, count: 5, contents: { ruby: 9000000, silver_key: 10 } },
             { id: "ruby_pass_bonus", name: "완료 보너스", price: 0, count: 1, contents: { ruby: 9999900, dimension_fragment: 2000, golden_key: 5 } }
@@ -422,8 +430,8 @@ const packages = [
         id: "key_pass_full",
         name: "열쇠 스테이지 패스 (전체 구매)",
         type: "stepup",
-        tier: "S",
-        description: "5회 구매 시 열쇠 및 차원 조각 추가 지급.",
+        tier: "B",
+        description: "던열만 봤을 때는 정령 패스보다 좋긴 한데, 다른 물품도 봤을 때는 정령 패스가 더 좋다 평가받습니다.",
         subPackages: [
             { id: "key_pass_unit", name: "열쇠 패스 (1~5회)", price: 33000, count: 5, contents: { dungeon_key: 1125, dimension_key: 11250, dimension_fragment: 600, silver_key: 10 } },
             { id: "key_pass_bonus", name: "완료 보너스", price: 0, count: 1, contents: { dungeon_key: 1200, dimension_fragment: 2000, golden_key: 5 } }
@@ -433,8 +441,8 @@ const packages = [
         id: "magic_pass_full",
         name: "마법 성장 패스 (전체 구매)",
         type: "stepup",
-        tier: "A",
-        description: "전체 구매 시 총 212,500 마법 획득.",
+        tier: "B",
+        description: "단순 루비로 환산하면 상당히 효율 좋은 패키지긴 하지만, 마법을 굳이 루비로 뽑는 사람은 극소수일 뿐더러 범용성이 너무 낮습니다.",
         subPackages: [
             { id: "magic_pass_unit", name: "마법 패스 (1~5회)", price: 33000, count: 5, contents: { magic: 22500, dimension_fragment: 600, silver_key: 10 } },
             { id: "magic_pass_bonus", name: "완료 보너스", price: 0, count: 1, contents: { magic: 100000, dimension_fragment: 2000, golden_key: 5 } }
@@ -444,8 +452,8 @@ const packages = [
         id: "spirit_pass_full",
         name: "정령 성장 패스 (전체 구매)",
         type: "stepup",
-        tier: "A",
-        description: "전체 구매 시 상자 총 290개 획득 (확정 보상 포함).",
+        tier: "B",
+        description: "성장 패스류 중에서는 효율이 제일 괜찮다고 평가 받습니다. 그래도 효율이 엄청 좋지는 않아요.",
         subPackages: [
             {
                 id: "spirit_pass_unit",
@@ -485,7 +493,7 @@ const packages = [
         price: 19000,
         count: 1,
         tier: "S",
-        description: "한 달에 한 번 구매 가능한 고효율 패키지 (상자 기댓값 포함).",
+        description: "한 달에 한 번 구매 가능한 패스로, 괜찮은 효율을 가집니다.",
         contents: {
             dungeon_key: 1100 + 92, // Base + Random Box EV (9.16 * 10)
             magic: 15000,
@@ -503,7 +511,8 @@ const packages = [
         price: 22000,
         count: 1,
         tier: "S",
-        description: "시즌 패스 보상 + 루비 소모형 레벨업 및 시간 구매(350만 루비) 포함. 시즌 랜덤 상자 총 47개 기댓값 반영.",
+        tierTooltip: "균형의 선각자 이상 장비를 사용하는 후반부 파밍 단계에서는 장비 강화 재화 수급용으로 SSS급 가치가 있습니다.",
+        description: "시즌 패스 보상 + 루비 소모형 레벨업 및 시간 구매 반영. 시즌 랜덤 상자 총 47개 기댓값 반영. 재화 효율은 최상급 패키지에 비해 떨어지지만 핫타임을 중시한다면 SS~SSS급도 노려볼 만합니다.",
         contents: {
             ruby: -3710000,           // -21만(레벨) - 350만(시간)
             dungeon_key: 1040 + 196,  // Base(600+440) + (47 boxes * 4.16 EV)
@@ -521,8 +530,8 @@ const packages = [
         name: "메인 퀘스트 컴플리트 패키지",
         price: 39000,
         count: 1,
-        tier: "B",
-        description: "메인 퀘스트 완료 기념 패키지.",
+        tier: "A",
+        description: "차조가 부족하다면 급하게나마 살 만한 패키지입니다. 효율이 대단히 좋지는 않습니다.",
         contents: {
             golden_key: 10,
             dimension_fragment: 3500,
@@ -535,8 +544,8 @@ const packages = [
         name: "스페셜 시즌 패스",
         price: 9900,
         count: 1,
-        tier: "S",
-        description: "2달에 1번 구매 가능. 던열 240개 추가 보상 포함(기댓값).",
+        tier: "SS",
+        description: "약 2달에 1번 구매 가능합니다. 40일 가정이며, 구매자들을 대상으로 상품을 2번씩 구매 가능하게 한 패치 이후로 효율이 대폭 상승하여 SS급으로 떡상했습니다.",
         contents: {
             ruby: 3000000,
             ap: 3000000,
@@ -554,8 +563,8 @@ const packages = [
         name: "정령 외형 패키지",
         price: 33000,
         count: 9,
-        tier: "A",
-        description: "정령 성장 상자 30개 및 전용 버프 포함.",
+        tier: "B",
+        description: "버프가 있긴 하지만, 룩을 중요시 하지 않는다면 살 이유가 크지는 않은 패키지입니다.",
         contents: {
             ruby: 220000,
             ap: 10000000,
@@ -574,8 +583,8 @@ const packages = [
         name: "월드 보스 시즌 패스",
         price: 9900,
         count: 1,
-        tier: "S",
-        description: "63일 풀 접속 및 명예 훈장 상자(200회) 기댓값 합산. 개발자 피셜 기반 (1회 평균 1.5개 보상, 신차결 3% 등).",
+        tier: "B",
+        description: "시즌 기간 63일로 가정합니다. 재화 효율은 딱 B급 수준이고, 시즌 상품을 빨리 쓰기 위한 그 정도의 의의만 있습니다. 시즌 상품이 좋게 나오면 A도 가능합니다.",
         contents: {
             ruby: 189000,
             honor_medal: 408000,
@@ -593,8 +602,8 @@ const packages = [
         name: "월드 보스 비시즌 패키지",
         price: 33000,
         count: 5,
-        tier: "B",
-        description: "빛바랜 명예 훈장 대량 획득 가능.",
+        tier: "D",
+        description: "빛바랜 명예 훈장을 획득 가능하긴 하지만, 가격에 비해 효과가 너무 낮습니다.",
         contents: {
             ruby: 330000,
             faded_medal: 1500000,
@@ -609,8 +618,8 @@ const packages = [
         name: "사냥꾼의 기술 지원 패키지",
         price: 33000,
         count: 5,
-        tier: "B",
-        description: "사냥꾼의 훈장 대량 획득 가능.",
+        tier: "D",
+        description: "현 시점 제일 존재 의의를 모르겠는 패키지입니다. 고수들은 하루에 몇십만개씩 파밍하고, 뉴비들은 초반에 지급하는 훈장이 많아서...",
         contents: {
             ruby: 330000,
             hunter_medal: 1000000,
@@ -625,8 +634,8 @@ const packages = [
         name: "혼돈의 상자 패키지",
         price: 16000,
         count: 2,
-        tier: "A",
-        description: "매월 2번 구매 가능. 혼돈 훈장 및 다양한 재화 수급.",
+        tier: "C",
+        description: "혼돈 스킬이 급할 때 아니면 살 이유 딱히 없는 패키지입니다.",
         contents: {
             ruby: 1600000,
             dimension_fragment: 400,
@@ -643,8 +652,8 @@ const packages = [
         name: "칠흑 훈장 패키지",
         price: 16000,
         count: 2,
-        tier: "A",
-        description: "칠흑의 상자 30개 포함 (상자당 끝없는 영원 결정 1000개 가정).",
+        tier: "B",
+        description: "마스터리 젬 효과로 1000개씩 받는다 가정합니다. 유적지가 급하다면 결정 패키지보다 효율이 좋긴 합니다. 의외로 차조 효율이 괜찮은 편입니다.",
         contents: {
             ruby: 1600000,
             dimension_fragment: 400 + (30 * 15), // Base + Boxes
@@ -659,14 +668,15 @@ const packages = [
         id: "elysia_full",
         name: "엘리시아 스텝업 (전체 구매)",
         type: "stepup",
-        tier: "S",
-        description: "엘리시아 1~3차 및 보너스 합계. 루비 수급 최적화 구조.",
+        tier: "B",
+        description: "가격이 비싼 편이므로 모두 구매할 각오가 되어 있지 않다면 함부로 손 대지 않는 걸 추천드립니다. 싼 것만 사서 보너스 받는 건 논외.",
         subPackages: [
             {
                 id: "elysia_1",
                 name: "엘리시아 1차",
                 price: 33000,
                 count: 2,
+                tier: "B",
                 contents: {
                     ruby: 1500000,
                     dungeon_key: 440,
@@ -681,6 +691,7 @@ const packages = [
                 name: "엘리시아 2차",
                 price: 55000,
                 count: 2,
+                tier: "B",
                 contents: {
                     ruby: 2500000,
                     dungeon_key: 700,
@@ -695,6 +706,7 @@ const packages = [
                 name: "엘리시아 3차",
                 price: 110000,
                 count: 2,
+                tier: "B",
                 contents: {
                     ruby: 5000000,
                     dungeon_key: 1650,
@@ -709,6 +721,7 @@ const packages = [
                 name: "엘리시아 보너스",
                 price: 0,
                 count: 1,
+                tier: "B",
                 contents: {
                     ruby: 4999900,
                     dungeon_key: 2500,
