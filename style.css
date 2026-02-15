@@ -285,7 +285,7 @@ td:nth-child(1) {
     color: #fbbf24;
     font-size: 1.1rem;
     /* Increased size for Tier */
-    text-shadow: 0 0 10px rgba(251, 191, 36, 0.3);
+    text-shadow: 0 0 14px rgba(251, 191, 36, 0.3);
 }
 
 .radio-item:has(input:checked)::before {
@@ -376,7 +376,10 @@ th.sortable:hover {
 th.sortable.active-sort {
     color: #fbbf24;
     /* Amber color for active sort */
-    background-color: rgba(251, 191, 36, 0.1);
+    background-color: #1e293b;
+    /* Solid base color */
+    background-image: linear-gradient(rgba(251, 191, 36, 0.1), rgba(251, 191, 36, 0.1));
+    /* Tint overlay */
     text-shadow: 0 0 10px rgba(251, 191, 36, 0.3);
 }
 
