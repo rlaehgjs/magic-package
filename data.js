@@ -31,7 +31,7 @@ const RESOURCE_NAMES = {
     endless_eternal_crystal: "끝없는 영원 결정"
 };
 
-// Main Data
+// 패키지 정보
 const packages = [
     {
         id: "burning_boost",
@@ -39,7 +39,7 @@ const packages = [
         price: 1500,
         count: 1,
         tier: "SSS",
-        description: "초보자면 말할 필요도 없고, 그게 아니라도 가성비 최고로 재화를 얻을 수 있는 패키지",
+        description: "초보자면 말할 필요도 없고, 그게 아니라도 가성비 최고로 재화를 얻을 수 있는 패키지입니다.",
         contents: {
             magic_stone: 130000000,
             ruby: 5500000,
@@ -152,7 +152,7 @@ const packages = [
         name: "클로에 스텝업 (전체 구매)",
         type: "stepup",
         tier: "B",
-        description: "클로에 1차~4차 및 보너스까지 모두 획득 시 총합.",
+        description: "클로에 1차~4차 및 보너스까지 모두 획득 시 총합입니다. 생각보다 효율 나쁘지는 않지만, 모든 패키지를 전부 구매하여야 제 효율을 냅니다. 엘리시아를 열려면 클로에를 전부 사야 합니다.",
         // Parent contents/price will be calculated automatically in main.js
         subPackages: [
             {
@@ -285,8 +285,8 @@ const packages = [
         id: "lunar_stepup_full",
         name: "설날 한정 스텝업 (전체 구매)",
         type: "stepup",
-        tier: "S",
-        description: "1~4단계 구매 시 5단계 보너스 획득 가능.",
+        tier: "B",
+        description: "중과금러가 지를만한 마지막 패키지입니다. 역시 전부 구매한다 생각하셔야 합니다. 개인적으로 클로에 엘리시아 레전더리 유니크 5총사 중 제일 효율 떨어진다 생각합니다.",
         subPackages: [
             { id: "lunar_s1", name: "설날 1단계", price: 11000, count: 1, contents: { ruby: 110000, dungeon_key: 130, dimension_fragment: 220, abyss_scroll: 120, magic: 3000, golden_key: 1 } },
             { id: "lunar_s2", name: "설날 2단계", price: 33000, count: 1, contents: { ruby: 330000, dungeon_key: 400, dimension_fragment: 660, abyss_scroll: 360, magic: 10000, golden_key: 1 } },
@@ -512,7 +512,7 @@ const packages = [
         count: 1,
         tier: "S",
         tierTooltip: "균형의 선각자 이상 장비를 사용하는 후반부 파밍 단계에서는 장비 강화 재화 수급용으로 SSS급 가치가 있습니다.",
-        description: "시즌 패스 보상 + 루비 소모형 레벨업 및 시간 구매 반영. 시즌 랜덤 상자 총 47개 기댓값 반영. 재화 효율은 최상급 패키지에 비해 떨어지지만 핫타임을 중시한다면 SS~SSS급도 노려볼 만합니다.",
+        description: "시즌 패스 보상 + 루비 소모 레벨업(14회) 및 시간 구매 반영. 시즌 랜덤 상자 총 47개 기댓값 반영. 재화 효율은 최상급 패키지에 비해 떨어지지만 핫타임을 중시한다면 SS~SSS급도 노려볼 만합니다.",
         contents: {
             ruby: -3710000,           // -21만(레벨) - 350만(시간)
             dungeon_key: 1040 + 196,  // Base(600+440) + (47 boxes * 4.16 EV)
