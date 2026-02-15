@@ -29,7 +29,7 @@ body {
     flex-direction: column;
     align-items: center;
     position: relative;
-    /* Removed overflow-x: hidden to allow mobile horizontal scroll */
+    overflow-x: hidden;
 }
 
 .background-glow {
@@ -104,14 +104,12 @@ main {
 /* Table Design */
 .table-container {
     overflow: auto;
-    /* Handle both x and y */
     border-radius: 16px;
     border: 1px solid rgba(255, 255, 255, 0.1);
     background: var(--card-bg);
     backdrop-filter: blur(10px);
     position: relative;
     max-height: 70vh;
-    /* Restore a safe height to ensure internal scroll works */
     width: 100%;
 }
 
@@ -306,24 +304,21 @@ td {
 
 th {
     background-color: #1e293b;
-    background: var(--table-header-bg);
     color: var(--text-secondary);
     font-weight: 700;
     text-transform: uppercase;
     font-size: 0.85rem;
     letter-spacing: 0.05em;
     position: sticky;
-    top: var(--header-offset, 0);
-    /* Offset by dashboard height */
-    z-index: 900;
-    /* Slightly lower than dashboard container */
+    top: 0;
+    z-index: 10;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
 }
 
 thead {
     position: sticky;
-    top: var(--header-offset, 0);
-    z-index: 900;
+    top: 0;
+    z-index: 10;
     background-color: #1e293b;
 }
 
@@ -564,6 +559,11 @@ tbody tr:last-child td {
     /* 하늘색 */
 }
 
+.col-other {
+    min-width: 250px;
+    /* Increased from implicit width */
+}
+
 .col-other ul {
     list-style-type: none;
     padding: 0;
@@ -587,6 +587,14 @@ tbody tr:last-child td {
 
 .th-score {
     text-align: center;
+}
+
+.col-desc {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    max-width: 120px;
+    /* Reduced by half */
+    white-space: normal;
 }
 
 /* Responsive Adjustments */
@@ -625,10 +633,19 @@ tbody tr:last-child td {
 
     .table-container {
         max-height: none;
-        /* Allow full height with sticky header on mobile */
         border-radius: 0;
-        border-left: none;
-        border-right: none;
+        border: none;
+        overflow: visible;
+    }
+
+    th {
+        top: var(--header-offset, 0);
+        z-index: 900;
+    }
+
+    thead {
+        top: var(--header-offset, 0);
+        z-index: 900;
     }
 
     .divider {
