@@ -602,6 +602,7 @@ tbody tr:last-child td {
     body {
         align-items: flex-start;
         /* Ensure wide content starts from left */
+        overflow-x: auto;
     }
 
     #capture-area {
@@ -644,14 +645,14 @@ tbody tr:last-child td {
 
     thead {
         position: sticky;
-        top: 0;
+        top: var(--header-offset, 0);
         z-index: 900;
         background-color: #1e293b;
     }
 
     th {
         position: sticky;
-        top: 0;
+        top: var(--header-offset, 0);
         z-index: 900;
         background-color: #1e293b;
     }
@@ -679,6 +680,8 @@ tbody tr:last-child td {
         position: sticky;
         top: 0;
         left: 0;
+        width: 100vw;
+        /* Essential to stay centered in viewport while table scrolls */
         z-index: 1000;
         background: var(--bg-color);
         box-sizing: border-box;
