@@ -58,7 +58,7 @@ header {
     /* Important for horizontal scroll */
     width: 100vw;
     /* Keep centered to viewport */
-    z-index: 1000;
+    z-index: 10000;
     background: var(--bg-color);
     display: flex;
     flex-direction: column;
@@ -66,6 +66,18 @@ header {
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
     will-change: transform;
+}
+
+/* Hide table content bleed-through during bounce/over-scroll */
+.top-sticky-container::before {
+    content: '';
+    position: absolute;
+    top: -500px;
+    left: 0;
+    width: 100%;
+    height: 501px;
+    background: var(--bg-color);
+    z-index: -1;
 }
 
 header h1 {
@@ -319,7 +331,7 @@ th {
     letter-spacing: 0.05em;
     position: sticky;
     top: var(--header-offset, 100px);
-    z-index: 950;
+    z-index: 9999;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
 }
 
@@ -651,7 +663,7 @@ tbody tr:last-child td {
     th {
         position: sticky;
         top: var(--header-offset, 0);
-        z-index: 950;
+        z-index: 9999;
         background-color: #1e293b;
     }
 
