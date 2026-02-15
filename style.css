@@ -52,24 +52,38 @@ header {
 }
 
 /* Full-width sticky header that scrolls with the page */
+/* Full-width sticky header container (Background Layer) */
 .top-sticky-container {
     position: sticky;
     top: 0;
     min-width: 1800px;
-    /* Expands to match table width */
+    /* Scrolls with table */
     width: 100%;
     z-index: 10000;
     background: var(--bg-color);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    /* Centers content horizontally */
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
     will-change: transform;
+    /* Removed flex centering from here, moved to inner */
 }
 
-/* Hide table content bleed-through during bounce/over-scroll */
+/* Inner wrapper for viewport-centered content */
+.sticky-content-inner {
+    position: sticky;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    /* Fits viewport width */
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* Center content in viewport */
+    padding: 1rem 0;
+    /* Add some vertical padding */
+}
+
+/* Hide table content bleed-through */
 .top-sticky-container::before {
     content: '';
     position: absolute;
@@ -264,6 +278,14 @@ table {
     border-color: #f59e0b;
     color: #fbbf24;
     box-shadow: 0 0 15px rgba(245, 158, 11, 0.2);
+}
+
+td:nth-child(1) {
+    font-weight: 800;
+    color: #fbbf24;
+    font-size: 1.1rem;
+    /* Increased size for Tier */
+    text-shadow: 0 0 10px rgba(251, 191, 36, 0.3);
 }
 
 .radio-item:has(input:checked)::before {
