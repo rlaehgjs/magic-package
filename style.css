@@ -29,7 +29,7 @@ body {
     flex-direction: column;
     align-items: center;
     position: relative;
-    overflow-x: hidden;
+    /* overflow-x: hidden; removed to allow horizontal scroll when needed */
 }
 
 .background-glow {
@@ -631,21 +631,26 @@ tbody tr:last-child td {
         font-size: 0.8rem;
     }
 
+    thead {
+        position: sticky;
+        top: var(--header-offset, 0);
+        z-index: 900;
+        background-color: #1e293b;
+    }
+
+    th {
+        position: sticky;
+        top: var(--header-offset, 0);
+        z-index: 900;
+        background-color: #1e293b;
+    }
+
     .table-container {
         max-height: none;
         border-radius: 0;
         border: none;
         overflow: visible;
-    }
-
-    th {
-        top: var(--header-offset, 0);
-        z-index: 900;
-    }
-
-    thead {
-        top: var(--header-offset, 0);
-        z-index: 900;
+        /* Important for sticky header to stick to page */
     }
 
     .divider {
@@ -661,6 +666,10 @@ tbody tr:last-child td {
     .top-sticky-container {
         position: sticky;
         top: 0;
+        left: 0;
+        width: 100vw;
         z-index: 1000;
+        background: var(--bg-color);
+        box-sizing: border-box;
     }
 }
