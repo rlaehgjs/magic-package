@@ -679,9 +679,6 @@ tbody tr:last-child td {
         position: sticky;
         top: 0;
         left: 0;
-        /* Sticks to the left of the VIEWPORT */
-        width: 100vw;
-        /* Takes only the screen width */
         z-index: 1000;
         background: var(--bg-color);
         box-sizing: border-box;
