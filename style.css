@@ -30,8 +30,9 @@ body {
     position: relative;
     overflow-x: auto;
     /* Revert to page scroll */
-    align-items: flex-start;
     /* Align start to prevent clipping */
+    padding-top: var(--header-offset, 280px);
+    /* Compensation for fixed header */
 }
 
 .background-glow {
@@ -51,36 +52,31 @@ header {
     padding: 1rem 1rem 0.5rem;
 }
 
-/* Full-width sticky header that scrolls with the page */
-/* Full-width sticky header container (Background Layer) */
+/* Full-width fixed header container (Background Layer) */
 .top-sticky-container {
-    position: sticky;
+    position: fixed;
+    /* Fixed to viewport */
     top: 0;
-    min-width: 1800px;
-    /* Scrolls with table */
+    left: 0;
     width: 100%;
     z-index: 10000;
     background: var(--bg-color);
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
     will-change: transform;
-    /* Removed flex centering from here, moved to inner */
+    display: flex;
+    justify-content: center;
+    /* Center content horizontally */
 }
 
-/* Inner wrapper for viewport-centered content */
+/* Inner wrapper for content */
 .sticky-content-inner {
-    position: sticky;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    /* Fits viewport width */
-    max-width: 100%;
+    width: 100%;
+    max-width: 100vw;
     display: flex;
     flex-direction: column;
     align-items: center;
-    /* Center content in viewport */
     padding: 1rem 0;
-    /* Add some vertical padding */
 }
 
 /* Hide table content bleed-through */
@@ -283,9 +279,9 @@ table {
 td:nth-child(1) {
     font-weight: 800;
     color: #fbbf24;
-    font-size: 1.1rem;
+    font-size: 1.35rem;
     /* Increased size for Tier */
-    text-shadow: 0 0 14px rgba(251, 191, 36, 0.3);
+    text-shadow: 0 0 10px rgba(251, 191, 36, 0.3);
 }
 
 .radio-item:has(input:checked)::before {
@@ -711,16 +707,5 @@ tbody tr:last-child td {
         margin: 10px 0 0 0;
         width: 100%;
         justify-content: center;
-    }
-
-    /* Reset specific mobile overrides to use the main global sticky logic */
-    .top-sticky-container {
-        position: sticky;
-        top: 0;
-        min-width: 1800px;
-        z-index: 10000;
-        background: var(--bg-color);
-        box-sizing: border-box;
-        padding-bottom: 10px;
     }
 }
