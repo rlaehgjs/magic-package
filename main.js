@@ -314,6 +314,16 @@ function renderChart(sortedPackages) {
             }
         }
     });
+    // Update offset after chart is rendered/resized
+    setTimeout(updateStickyOffset, 100);
+}
+
+function updateStickyOffset() {
+    const dashboard = document.querySelector('.top-sticky-container');
+    if (dashboard) {
+        const height = dashboard.offsetHeight;
+        document.documentElement.style.setProperty('--header-offset', height + 'px');
+    }
 }
 
 function renderAll() {
@@ -432,6 +442,12 @@ document.addEventListener('DOMContentLoaded', () => {
     if (captureBtn) {
         captureBtn.addEventListener('click', captureTable);
     }
+
+    // Initial offset calculation
+    updateStickyOffset();
+
+    // Recalculate on window resize
+    window.addEventListener('resize', updateStickyOffset);
 });
 
 function captureTable() {
