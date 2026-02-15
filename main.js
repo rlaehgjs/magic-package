@@ -304,6 +304,7 @@ function renderChart(sortedPackages) {
                     labels: { color: '#f8fafc', font: { weight: 'bold' } }
                 },
                 tooltip: {
+                    zIndex: 2000,
                     callbacks: {
                         label: function (context) {
                             let val = context.parsed.y;
@@ -314,8 +315,8 @@ function renderChart(sortedPackages) {
             }
         }
     });
-    // Update offset after chart is rendered/resized
-    setTimeout(updateStickyOffset, 100);
+    // Update offset after chart is rendered/resized with a small delay for layout stabilization
+    setTimeout(updateStickyOffset, 150);
 }
 
 function updateStickyOffset() {
@@ -444,10 +445,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Initial offset calculation
-    updateStickyOffset();
+    setTimeout(updateStickyOffset, 200);
 
-    // Recalculate on window resize
-    window.addEventListener('resize', updateStickyOffset);
+    // Recalculate on window resize with debounce logic
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(updateStickyOffset, 100);
+    });
 });
 
 function captureTable() {
