@@ -316,16 +316,10 @@ function renderChart(sortedPackages) {
         }
     });
     // Update offset after chart is rendered/resized with a small delay for layout stabilization
-    setTimeout(updateStickyOffset, 150);
+    // Offset update handled by ResizeObserver
 }
 
-function updateStickyOffset() {
-    const dashboard = document.querySelector('.top-sticky-container');
-    if (dashboard) {
-        const height = dashboard.offsetHeight;
-        document.documentElement.style.setProperty('--header-offset', height + 'px');
-    }
-}
+/* updateStickyOffset removed - handled by index.html script */
 
 function renderAll() {
     if (typeof packages === 'undefined') {
@@ -445,14 +439,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Initial offset calculation
-    setTimeout(updateStickyOffset, 200);
-
-    // Recalculate on window resize with debounce logic
-    let resizeTimer;
-    window.addEventListener('resize', () => {
-        clearTimeout(resizeTimer);
-        resizeTimer = setTimeout(updateStickyOffset, 100);
-    });
+    // Layout updates are now handled by ResizeObserver in index.html
 });
 
 function captureTable() {

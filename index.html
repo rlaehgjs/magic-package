@@ -18,51 +18,48 @@
 <body>
     <div class="background-glow"></div>
     <div id="capture-area" style="background-color: var(--bg-color);">
-        <div class="top-sticky-container">
-            <div class="sticky-content-inner">
-                <header>
-                    <h1>마법소녀 키우기 패키지 효율표</h1>
-                    <p>2026.02.15(V7.42)기준</p>
-                </header>
+        <div id="fixed-header-group" class="fixed-header-group">
+            <header>
+                <h1>마법소녀 키우기 패키지 효율표</h1>
+                <p>2026.02.15(V7.42)기준</p>
+            </header>
 
-                <!-- Chart Section -->
-                <section class="chart-container">
-                    <canvas id="efficiencyChart"></canvas>
-                </section>
+            <!-- Chart Section -->
+            <section class="chart-container">
+                <canvas id="efficiencyChart"></canvas>
+            </section>
 
-                <div class="settings-wrapper">
-                    <div class="settings-container">
-                        <label class="settings-label">🔑 황금 열쇠 보상:</label>
-                        <div class="radio-group">
-                            <label class="radio-item"><input type="radio" name="key-choice" value="dungeon_key"
-                                    checked><span>던전
-                                    열쇠</span></label>
-                            <label class="radio-item"><input type="radio" name="key-choice"
-                                    value="dimension_fragment"><span>차원의
-                                    조각</span></label>
-                            <label class="radio-item"><input type="radio" name="key-choice"
-                                    value="exploration_key"><span>탐험
-                                    열쇠</span></label>
-                            <label class="radio-item"><input type="radio" name="key-choice"
-                                    value="ruby"><span>루비</span></label>
-                        </div>
-
-                        <div class="divider"></div>
-
-                        <label class="switch-item">
-                            <input type="checkbox" id="convert-ap-toggle">
-                            <span class="slider">✨ 어빌포 환산</span>
-                        </label>
-                        <label class="switch-item">
-                            <input type="checkbox" id="convert-magic-toggle">
-                            <span class="slider">🔮 마법 환산</span>
-                        </label>
-                        <label class="switch-item">
-                            <input type="checkbox" id="efficiency-mode-toggle">
-                            <span class="slider">📊 가성비 모드(만원당)</span>
-                        </label>
-                        <button id="capture-btn" class="capture-btn">📸 이미지 저장</button>
+            <div class="settings-wrapper">
+                <div class="settings-container">
+                    <label class="settings-label">🔑 황금 열쇠 보상:</label>
+                    <div class="radio-group">
+                        <label class="radio-item"><input type="radio" name="key-choice" value="dungeon_key"
+                                checked><span>던전
+                                열쇠</span></label>
+                        <label class="radio-item"><input type="radio" name="key-choice"
+                                value="dimension_fragment"><span>차원의
+                                조각</span></label>
+                        <label class="radio-item"><input type="radio" name="key-choice" value="exploration_key"><span>탐험
+                                열쇠</span></label>
+                        <label class="radio-item"><input type="radio" name="key-choice"
+                                value="ruby"><span>루비</span></label>
                     </div>
+
+                    <div class="divider"></div>
+
+                    <label class="switch-item">
+                        <input type="checkbox" id="convert-ap-toggle">
+                        <span class="slider">✨ 어빌포 환산</span>
+                    </label>
+                    <label class="switch-item">
+                        <input type="checkbox" id="convert-magic-toggle">
+                        <span class="slider">🔮 마법 환산</span>
+                    </label>
+                    <label class="switch-item">
+                        <input type="checkbox" id="efficiency-mode-toggle">
+                        <span class="slider">📊 가성비 모드(만원당)</span>
+                    </label>
+                    <button id="capture-btn" class="capture-btn">📸 이미지 저장</button>
                 </div>
             </div>
         </div>
@@ -103,6 +100,32 @@
     <!-- Load data first -->
     <script src="data.js"></script>
     <script src="main.js"></script>
+    <script>
+        function updateLayout() {
+            const fixedGroup = document.getElementById('fixed-header-group');
+            if (fixedGroup) {
+                // 1. Measure height of fixed header group
+                const height = fixedGroup.getBoundingClientRect().height;
+
+                // 2. Update CSS variable with new height
+                document.documentElement.style.setProperty('--header-offset', height + 'px');
+            }
+        }
+
+        // Run on load and resize
+        window.addEventListener('load', updateLayout);
+        window.addEventListener('resize', updateLayout);
+
+        // Detect height changes (zoom, dynamic content) with ResizeObserver
+        const resizeObserver = new ResizeObserver(() => {
+            updateLayout();
+        });
+
+        const fixedEl = document.getElementById('fixed-header-group');
+        if (fixedEl) {
+            resizeObserver.observe(fixedEl);
+        }
+    </script>
 </body>
 
 </html>

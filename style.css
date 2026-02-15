@@ -16,6 +16,9 @@
     --tier-b: #3b82f6;
     --tier-c: #10b981;
     --tier-d: #64748b;
+
+    /* Initial value for JS calculation */
+    --header-offset: 400px;
 }
 
 body {
@@ -29,10 +32,28 @@ body {
     flex-direction: column;
     position: relative;
     overflow-x: auto;
-    /* Revert to page scroll */
-    /* Align start to prevent clipping */
-    padding-top: var(--header-offset, 280px);
-    /* Compensation for fixed header */
+
+    /* Dynamic padding top based on fixed header height */
+    padding-top: var(--header-offset);
+}
+
+/* Fixed Header Group (Title + Chart + Buttons) */
+.fixed-header-group {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    /* Higher than table */
+    background-color: var(--bg-color);
+    /* prevent bleed-through */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 1rem;
+    /* spacing for table */
 }
 
 .background-glow {
@@ -52,44 +73,7 @@ header {
     padding: 1rem 1rem 0.5rem;
 }
 
-/* Full-width fixed header container (Background Layer) */
-.top-sticky-container {
-    position: fixed;
-    /* Fixed to viewport */
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 10000;
-    background: var(--bg-color);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
-    will-change: transform;
-    display: flex;
-    justify-content: center;
-    /* Center content horizontally */
-}
-
-/* Inner wrapper for content */
-.sticky-content-inner {
-    width: 100%;
-    max-width: 100vw;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 1rem 0;
-}
-
-/* Hide table content bleed-through */
-.top-sticky-container::before {
-    content: '';
-    position: absolute;
-    top: -500px;
-    left: 0;
-    width: 100%;
-    height: 501px;
-    background: var(--bg-color);
-    z-index: -1;
-}
+/* Old .top-sticky-container styles removed */
 
 header h1 {
     font-size: 2rem;
@@ -342,16 +326,23 @@ td {
 }
 
 th {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    white-space: nowrap;
+
     background-color: #1e293b;
-    /* Solid background prevents bleed-through */
+    /* Header background */
     color: var(--text-secondary);
     font-weight: 700;
     text-transform: uppercase;
     font-size: 0.85rem;
-    letter-spacing: 0.05em;
+
+    /* STICKY to the bottom of the fixed header group */
     position: sticky;
-    top: var(--header-offset, 100px);
-    z-index: 9999;
+    top: var(--header-offset);
+    z-index: 990;
+    /* Lower than fixed group (1000) */
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
 }
 
