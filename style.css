@@ -29,9 +29,9 @@ body {
     flex-direction: column;
     position: relative;
     overflow-x: auto;
-    /* Handle wide table via page scroll */
+    /* Revert to page scroll */
     align-items: flex-start;
-    /* Prevent left-side clipping */
+    /* Align start to prevent clipping */
 }
 
 .background-glow {
@@ -124,7 +124,7 @@ main {
 /* Table Design */
 .table-container {
     overflow: visible;
-    /* Let page handle sticky positioning */
+    /* Let page handle scrolling */
     border-radius: 16px;
     border: 1px solid rgba(255, 255, 255, 0.1);
     background: var(--card-bg);
@@ -324,6 +324,7 @@ td {
 
 th {
     background-color: #1e293b;
+    /* Solid background prevents bleed-through */
     color: var(--text-secondary);
     font-weight: 700;
     text-transform: uppercase;
@@ -691,8 +692,8 @@ tbody tr:last-child td {
         top: 0;
         left: 0;
         width: 100vw;
-        /* Essential to stay centered in viewport while table scrolls */
-        z-index: 1000;
+        /* Keep centered to viewport */
+        z-index: 10000;
         background: var(--bg-color);
         box-sizing: border-box;
         padding-bottom: 10px;
