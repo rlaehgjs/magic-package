@@ -28,10 +28,10 @@ body {
     display: flex;
     flex-direction: column;
     position: relative;
-    overflow-x: hidden;
-    /* Prevent page wobble, use internal scroll for table */
-    align-items: center;
-    /* Center dashboard */
+    overflow-x: auto;
+    /* Handle wide table via page scroll */
+    align-items: flex-start;
+    /* Prevent left-side clipping */
 }
 
 .background-glow {
@@ -54,8 +54,10 @@ header {
 .top-sticky-container {
     position: sticky;
     top: 0;
-    width: 100%;
-    /* Full width of parent */
+    left: 0;
+    /* Important for horizontal scroll */
+    width: 100vw;
+    /* Keep centered to viewport */
     z-index: 10000;
     background: var(--bg-color);
     display: flex;
@@ -121,17 +123,14 @@ main {
 
 /* Table Design */
 .table-container {
-    overflow-x: auto;
-    /* Internal horizontal scroll */
-    overflow-y: visible;
-    /* Let page handle vertical scroll */
+    overflow: visible;
+    /* Let page handle sticky positioning */
     border-radius: 16px;
     border: 1px solid rgba(255, 255, 255, 0.1);
     background: var(--card-bg);
     backdrop-filter: blur(10px);
     position: relative;
     width: 100%;
-    -webkit-overflow-scrolling: touch;
 }
 
 table {
@@ -690,8 +689,10 @@ tbody tr:last-child td {
     .top-sticky-container {
         position: sticky;
         top: 0;
-        width: 100%;
-        z-index: 10000;
+        left: 0;
+        width: 100vw;
+        /* Essential to stay centered in viewport while table scrolls */
+        z-index: 1000;
         background: var(--bg-color);
         box-sizing: border-box;
         padding-bottom: 10px;
