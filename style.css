@@ -635,7 +635,9 @@ tbody tr:last-child td {
         max-height: none;
         border-radius: 0;
         border: none;
-        overflow: visible;
+        overflow-x: auto;
+        width: 100%;
+        -webkit-overflow-scrolling: touch;
     }
 
     th {
