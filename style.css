@@ -28,8 +28,7 @@ body {
     display: flex;
     flex-direction: column;
     position: relative;
-    overflow-x: clip;
-    /* clip/visible are better for sticky than auto/hidden sometimes */
+    overflow-x: auto;
     /* Handle wide table via page scroll */
     align-items: flex-start;
     /* Prevent left-side clipping */
@@ -320,14 +319,12 @@ th {
     letter-spacing: 0.05em;
     position: sticky;
     top: var(--header-offset, 100px);
-    z-index: 900;
+    z-index: 950;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
 }
 
 thead {
-    position: sticky;
-    top: var(--header-offset, 100px);
-    z-index: 900;
+    /* Only th should be sticky to avoid mobile alignment issues */
     background-color: #1e293b;
 }
 
@@ -647,16 +644,14 @@ tbody tr:last-child td {
     }
 
     thead {
-        position: sticky;
-        top: var(--header-offset, 0);
-        z-index: 900;
+        position: static;
         background-color: #1e293b;
     }
 
     th {
         position: sticky;
         top: var(--header-offset, 0);
-        z-index: 900;
+        z-index: 950;
         background-color: #1e293b;
     }
 
