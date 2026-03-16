@@ -17,7 +17,6 @@ const RESOURCE_NAMES = {
     abyss_scroll: "심층 스크롤",
     magic_stone: "마정석",
     transcendence_stone: "초월석",
-    magic_draw: "마뽑",
     mystery_crystal: "신비한 차원의 결정",
     top_amulet: "최상급 아뮬렛",
     random_box: "정령의 성장 상자",

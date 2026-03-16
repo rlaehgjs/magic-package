@@ -30,11 +30,12 @@ const GOLDEN_KEY_FIXED = {
     time_scroll: 20
 };
 
+
 const GOLDEN_KEY_CHOICES = {
     dungeon_key: { dungeon_key: 160 },
-    dimension_fragment: { dimension_fragment: 400 },
+    dimension_fragment: { dimension_fragment: 300 },
     exploration_key: { exploration_key: 160 },
-    ruby: { ruby: 3000000 }
+    ruby: { ruby: 2000000 }
 };
 
 const CONVERSION_RATES = {
