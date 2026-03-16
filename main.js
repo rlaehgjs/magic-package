@@ -30,8 +30,6 @@ const GOLDEN_KEY_FIXED = {
     time_scroll: 20
 };
 
-
-
 const GOLDEN_KEY_CHOICES = {
     dungeon_key: { dungeon_key: 160 },
     dimension_fragment: { dimension_fragment: 400 },
