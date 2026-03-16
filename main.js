@@ -31,6 +31,7 @@ const GOLDEN_KEY_FIXED = {
 };
 
 
+
 const GOLDEN_KEY_CHOICES = {
     dungeon_key: { dungeon_key: 160 },
     dimension_fragment: { dimension_fragment: 300 },
