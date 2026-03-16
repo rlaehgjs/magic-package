@@ -17,7 +17,6 @@ const NAMES = (typeof RESOURCE_NAMES !== 'undefined') ? RESOURCE_NAMES : {
 };
 
 const SILVER_KEY_REWARDS = {
-    ruby: 100000,
     dungeon_key: 12,
     abyss_scroll: 10,
     mystery_crystal: 1
@@ -25,9 +24,7 @@ const SILVER_KEY_REWARDS = {
 
 const GOLDEN_KEY_FIXED = {
     ruby: 1000000,
-    abyss_scroll: 100,
-    mystery_crystal: 10,
-    time_scroll: 20
+    ap: 500000
 };
 
 
