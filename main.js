@@ -17,21 +17,24 @@ const NAMES = (typeof RESOURCE_NAMES !== 'undefined') ? RESOURCE_NAMES : {
 };
 
 const SILVER_KEY_REWARDS = {
-    dungeon_key: 10,
-    exploration_key: 10,
-    dimension_fragment: 30
+    ruby: 100000,
+    dungeon_key: 12,
+    abyss_scroll: 10,
+    mystery_crystal: 1
 };
 
 const GOLDEN_KEY_FIXED = {
     ruby: 1000000,
-    ap: 500000
+    abyss_scroll: 100,
+    mystery_crystal: 10,
+    time_scroll: 20
 };
 
 const GOLDEN_KEY_CHOICES = {
     dungeon_key: { dungeon_key: 160 },
-    dimension_fragment: { dimension_fragment: 300 },
+    dimension_fragment: { dimension_fragment: 400 },
     exploration_key: { exploration_key: 160 },
-    ruby: { ruby: 2000000 }
+    ruby: { ruby: 3000000 }
 };
 
 const CONVERSION_RATES = {

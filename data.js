@@ -24,7 +24,7 @@ const RESOURCE_NAMES = {
     monthly_random_box: "월간 랜덤 상자",
     season_random_box: "시즌 랜덤 상자",
     event_time: "이벤트 던전 시간(분)",
-    spirit_stone_buff: "정령석 획득량(배치)",
+    spirit_stone_buff: "총 정령석 획득량(15% 증가, 같은 옵션 내 합적용)",
     spirit_trait_point: "정령 특성 포인트",
     magic_core_level: "마법 코어 최대 레벨",
     unstable_eternal_crystal: "불안정한 영원 결정",
@@ -69,7 +69,7 @@ const packages = [
             exploration_key: 150,
             abyss_scroll: 1725,
             golden_key: 2,
-            magic_draw: 100000,
+            magic: 100000,
             mystery_crystal: 180,
             time_scroll: 75,
             transcendence_stone: 300000
@@ -95,9 +95,10 @@ const packages = [
         price: 16000,
         count: 3,
         tier: "S",
-        description: "차원의 조각만 봤을 때는 최고로 효율적인 패키지. 단 다른 재화도 보자면 핫딜 먼저 사는 걸 추천합니다.",
+        description: "차원의 조각만 봤을 때는 최고로 효율적인 패키지. 단 다른 재화도 보자면 핫딜 먼저 사는 걸 추천합니다. 차열이 정말로 필요하다면 차원 데일리 패스부터 사는 걸 강력히 추천하지만 이것도 괜찮긴 합니다.",
         contents: {
             dimension_fragment: 2500,
+            dimension_key: 8000,
             time_scroll: 50,
             silver_key: 1
         }
@@ -234,40 +235,40 @@ const packages = [
     },
     {
         id: "anniversary_1",
-        name: "4.5주년 감사 패키지 1",
+        name: "5주년 감사 패키지 1",
         price: 19000,
         count: 2,
         tier: "S",
         description: "초반이든 후반이든 잘 쓰이는 재화들만 모여 있습니다. 가성비도 좋아 S급을 받기 무리가 없습니다.",
         contents: {
-            dungeon_key: 1000,
-            dimension_fragment: 1500,
-            abyss_scroll: 1200,
-            top_amulet: 5,
+            dungeon_key: 1200,
+            dimension_fragment: 2400,
+            abyss_scroll: 1500,
+            top_amulet: 10,
             magic: 220000,
             golden_key: 3
         }
     },
     {
         id: "anniversary_2",
-        name: "4.5주년 감사 패키지 2",
+        name: "5주년 감사 패키지 2",
         price: 29000,
         count: 2,
         tier: "S",
         tierTooltip: "각성을 거의 하지 않은 뉴비들은 SSS급으로 볼 수 있습니다. 초월석을 주거든요.",
         description: "열쇠와 신차결, 초월석 위주 구성이지만, 이것도 전반적으로 효율이 매우 좋습니다. 굳이 등급을 매기자면 재화 범용성으로 인해 SS-S 사이?",
         contents: {
-            dungeon_key: 1500,
-            exploration_key: 1000,
-            dimension_fragment: 2250,
-            transcendence_stone: 220000,
+            dungeon_key: 1800,
+            exploration_key: 1800,
+            dimension_fragment: 3600,
+            transcendence_stone: 500000,
             mystery_crystal: 220,
             golden_key: 5
         }
     },
     {
         id: "lunar_hotdeal",
-        name: "설날 핫딜 패키지",
+        name: "5주년 핫딜 패키지",
         price: 9900,
         count: 2,
         tier: "SS",
@@ -282,17 +283,17 @@ const packages = [
         }
     },
     {
-        id: "lunar_stepup_full",
-        name: "설날 한정 스텝업 (전체 구매)",
+        id: "anniversary_stepup_full",
+        name: "5주년 한정 스텝업 (전체 구매)",
         type: "stepup",
         tier: "B",
-        description: "중과금러가 지를만한 마지막 패키지입니다. 역시 전부 구매한다 생각하셔야 합니다. 개인적으로 클로에 엘리시아 레전더리 유니크 5총사 중 제일 효율 떨어진다 생각합니다.",
+        description: "5주년 기념 한정 스텝업 패키지입니다. 역시 전부 구매한다 생각하셔야 제 효율을 냅니다. 근데 사실 이전의 설날 한정 스텝업과 상품 구성은 완벽하게 똑같습니다. 여전히 클로에 엘리시아 레전더리 유니크에 비해 안 좋다 생각합니다.",
         subPackages: [
-            { id: "lunar_s1", name: "설날 1단계", price: 11000, count: 1, contents: { ruby: 110000, dungeon_key: 130, dimension_fragment: 220, abyss_scroll: 120, magic: 3000, golden_key: 1 } },
-            { id: "lunar_s2", name: "설날 2단계", price: 33000, count: 1, contents: { ruby: 330000, dungeon_key: 400, dimension_fragment: 660, abyss_scroll: 360, magic: 10000, golden_key: 1 } },
-            { id: "lunar_s3", name: "설날 3단계", price: 55000, count: 1, contents: { ruby: 550000, dungeon_key: 700, dimension_fragment: 1100, abyss_scroll: 600, magic: 20000, golden_key: 2 } },
-            { id: "lunar_s4", name: "설날 4단계", price: 110000, count: 1, contents: { ruby: 1100000, dungeon_key: 1500, dimension_fragment: 2200, abyss_scroll: 1200, magic: 50000, golden_key: 3 } },
-            { id: "lunar_s5", name: "설날 5단계 (보너스)", price: 0, count: 1, contents: { ruby: 5499900, dungeon_key: 2000, top_amulet: 5, magic: 50000, mystery_crystal: 120, golden_key: 3 } }
+            { id: "anniversary_s1", name: "5주년 1단계", price: 11000, count: 1, contents: { ruby: 110000, dungeon_key: 130, dimension_fragment: 220, abyss_scroll: 120, magic: 3000, golden_key: 1 } },
+            { id: "anniversary_s2", name: "5주년 2단계", price: 33000, count: 1, contents: { ruby: 330000, dungeon_key: 400, dimension_fragment: 660, abyss_scroll: 360, magic: 10000, golden_key: 1 } },
+            { id: "anniversary_s3", name: "5주년 3단계", price: 55000, count: 1, contents: { ruby: 550000, dungeon_key: 700, dimension_fragment: 1100, abyss_scroll: 600, magic: 20000, golden_key: 2 } },
+            { id: "anniversary_s4", name: "5주년 4단계", price: 110000, count: 1, contents: { ruby: 1100000, dungeon_key: 1500, dimension_fragment: 2200, abyss_scroll: 1200, magic: 50000, golden_key: 3 } },
+            { id: "anniversary_s5", name: "5주년 5단계 (보너스)", price: 0, count: 1, contents: { ruby: 5499900, dungeon_key: 2000, top_amulet: 5, magic: 50000, mystery_crystal: 120, golden_key: 3 } }
         ]
     },
     {
@@ -399,22 +400,7 @@ const packages = [
             }
         ]
     },
-    {
-        id: "crystal_pkg",
-        name: "결정 패키지",
-        price: 22000,
-        count: 3,
-        tier: "C",
-        description: "끝없는 영원 결정을 정말 급하게 먹어야 할 때만 사시는 걸 추천드립니다. 칠흑 훈장 패키지 보다도 효율이 낮아요.",
-        contents: {
-            ruby: 220000,
-            dungeon_key: 400,
-            unstable_eternal_crystal: 500,
-            endless_eternal_crystal: 20000,
-            mystery_crystal: 80,
-            silver_key: 5
-        }
-    },
+
     {
         id: "ruby_pass_full",
         name: "루비 스테이지 패스 (전체 구매)",
@@ -598,36 +584,78 @@ const packages = [
         }
     },
     {
-        id: "wb_off_season",
-        name: "월드 보스 비시즌 패키지",
-        price: 33000,
-        count: 5,
+        id: "wb_off_season_full",
+        name: "월드 보스 비시즌 패키지 (전체 구매)",
+        type: "stepup",
         tier: "D",
-        description: "빛바랜 명예 훈장을 획득 가능하긴 하지만, 가격에 비해 효과가 너무 낮습니다.",
-        contents: {
-            ruby: 330000,
-            faded_medal: 1500000,
-            dungeon_key: 700,
-            dimension_fragment: 1400,
-            ap: 10000000,
-            silver_key: 5
-        }
+        description: "2회 구매 시 1회 추가 지급 (총 3회분). 상향 되어도 효율이 낮아 추천하지 않습니다.",
+        subPackages: [
+            {
+                id: "wb_off_season_unit",
+                name: "비시즌 패키지 (1~2회)",
+                price: 33000,
+                count: 2,
+                contents: {
+                    ruby: 330000,
+                    faded_medal: 1500000,
+                    dungeon_key: 700,
+                    dimension_fragment: 1400,
+                    ap: 10000000,
+                    silver_key: 5
+                }
+            },
+            {
+                id: "wb_off_season_bonus",
+                name: "2회 구매 보너스",
+                price: 0,
+                count: 1,
+                contents: {
+                    ruby: 330000,
+                    faded_medal: 1500000,
+                    dungeon_key: 700,
+                    dimension_fragment: 1400,
+                    ap: 10000000,
+                    silver_key: 5
+                }
+            }
+        ]
     },
     {
-        id: "hunter_support",
-        name: "사냥꾼의 기술 지원 패키지",
-        price: 33000,
-        count: 5,
+        id: "hunter_support_full",
+        name: "사냥꾼의 기술 지원 패키지 (전체 구매)",
+        type: "stepup",
         tier: "D",
-        description: "현 시점 제일 존재 의의를 모르겠는 패키지입니다. 고수들은 하루에 몇십만개씩 파밍하고, 뉴비들은 초반에 지급하는 훈장이 많아서...",
-        contents: {
-            ruby: 330000,
-            hunter_medal: 1000000,
-            dungeon_key: 700,
-            dimension_fragment: 1400,
-            magic: 33000,
-            silver_key: 5
-        }
+        description: "2회 구매 시 1회 추가 지급 (총 3회분). 고수들은 파밍이 가능하고 뉴비는 훈장이 많아 상향되었어도 효율은 여전히 아주 낮습니다.",
+        subPackages: [
+            {
+                id: "hunter_support_unit",
+                name: "기술 지원 패키지 (1~2회)",
+                price: 33000,
+                count: 2,
+                contents: {
+                    ruby: 330000,
+                    hunter_medal: 1000000,
+                    dungeon_key: 700,
+                    dimension_fragment: 1400,
+                    magic: 33000,
+                    silver_key: 5
+                }
+            },
+            {
+                id: "hunter_support_bonus",
+                name: "2회 구매 보너스",
+                price: 0,
+                count: 1,
+                contents: {
+                    ruby: 330000,
+                    hunter_medal: 1000000,
+                    dungeon_key: 700,
+                    dimension_fragment: 1400,
+                    magic: 33000,
+                    silver_key: 5
+                }
+            }
+        ]
     },
     {
         id: "chaos_box",
@@ -638,9 +666,9 @@ const packages = [
         description: "혼돈 스킬이 급할 때 아니면 살 이유 딱히 없는 패키지입니다.",
         contents: {
             ruby: 1600000,
-            dimension_fragment: 400,
+            dimension_fragment: 700,
             silver_key: 10,
-            dungeon_key: 210,
+            dungeon_key: 430,
             dimension_key: 3150,
             exploration_key: 105,
             magic: 4200,
@@ -656,10 +684,10 @@ const packages = [
         description: "마스터리 젬 효과로 1000개씩 받는다 가정합니다. 유적지가 급하다면 결정 패키지보다 효율이 좋긴 합니다. 의외로 차조 효율이 괜찮은 편입니다.",
         contents: {
             ruby: 1600000,
-            dimension_fragment: 400 + (30 * 15), // Base + Boxes
+            dimension_fragment: 700 + (30 * 15), // Base + Boxes
             silver_key: 10,
             ap: 30 * 15000,               // Boxes
-            dungeon_key: 30 * 10,         // Boxes
+            dungeon_key: (30 * 10) + 110, // Boxes + Added
             magic: 30 * 200,              // Boxes
             endless_eternal_crystal: 30 * 1000 // 30,000 (최대 업글 기준)
         }
